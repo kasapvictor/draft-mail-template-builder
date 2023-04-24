@@ -35,7 +35,7 @@ const blocks1 = [
     order: 1,
     component: 'section',
     props: {
-      size: '1/4',
+      size: '1/3',
       align: 'center',
       style: {}
     },
@@ -89,7 +89,7 @@ const blocks1 = [
     order: 2,
     component: 'section',
     props: {
-      size: '1/4',
+      size: '1/3',
       align: 'center',
       style: {}
     },

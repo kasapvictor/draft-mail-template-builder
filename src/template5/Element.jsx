@@ -1,11 +1,11 @@
-import React, {createElement, cloneElement, memo} from "react";
+import React, {createElement, cloneElement, memo, useState} from "react";
 import {useStore} from "effector-react";
 
 import { Column } from "./Column";
 import { Td } from "./Td";
 import { Tr } from "./Tr";
 
-import {$elementsStores} from "./store";
+import {$activeElementIndex, $elementsStores} from "./store";
 import {Section} from "./Section.jsx";
 
 const selfCloseElements = new Set([
@@ -38,10 +38,52 @@ const Component = ({component, children, ...props}) => {
   return <ComponentElement {...props}>{children}</ComponentElement>;
 }
 
+const styles = {
+  wrapper: {
+    position: 'relative',
+    // boxShadow: '0 0 0px 1px rgb(0 13 255), 0 0 0px 1.15px rgb(255 255 255)',
+  },
+  name: {
+    padding: '0px 8px 0px 8px',
+    position: 'absolute',
+    fontSize: '.75rem',
+    lineHeight: 1.2,
+    top: -15,
+    left: 0,
+    color: '#ffffff',
+    backgroundColor: 'rgb(0 13 255)',
+    borderTopRightRadius: 3,
+    borderTopLeftRadius: 3,
+  }
+}
+
+
+
 export const Element = ({ element, treeComponent, onClick }) => {
   const Tree = treeComponent;
   const [index, children] = element;
   const item = useStore($elementsStores[index]);
+  const activeElementIndex = useStore($activeElementIndex);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const isActive = activeElementIndex === index;
+
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => setIsHovered(false);
+
+  const wrapperStyle = {
+    ...styles.wrapper,
+    // boxShadow: isHovered || isActive ?  '0 0 0px 1px rgb(0 13 255), 0 0 0px 1.15px rgb(255 255 255)' : '',
+    outline: isHovered || isActive ?  '1px solid rgb(0 13 255)' : '',
+    outlineOffset: isHovered || isActive ?  '-1px' : '',
+    zIndex: isHovered || isActive ? 10 : 5,
+  };
+
+  const nameStyle = {
+    ...styles.name,
+    opacity: isHovered || isActive ? 1 : 0,
+    zIndex: isHovered || isActive ? 20 : -10,
+  }
 
   // console.log(item);
 
@@ -57,12 +99,22 @@ export const Element = ({ element, treeComponent, onClick }) => {
   }
 
   return (
-    createElement(tag, { ...props,  onClick },
-      selfCloseElement ? null :
-        <>
-          {content}
-          {children && <Tree indexTree={children} />}
-        </>
-    )
+    <div style={wrapperStyle}
+         onClick={onClick}
+         onMouseEnter={handleMouseEnter}
+         onMouseLeave={handleMouseLeave}
+    >
+      {createElement(tag, { ...props },
+        selfCloseElement ? null :
+          <>
+            {content}
+            {children && <Tree indexTree={children} />}
+          </>
+      )}
+      <span style={nameStyle}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+      >{tag}</span>
+    </div>
   );
 };

@@ -7,7 +7,6 @@ export const TreeNode = memo(({ indexTree }) => {
   const handleClick = (index) => (e) => {
     e.stopPropagation();
     setActiveIndex(index[0]);
-    console.log('Index element of array', index)
   }
 
   return (
