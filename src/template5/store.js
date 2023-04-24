@@ -1,7 +1,7 @@
 import {createStore, createEvent, createApi} from "effector";
 import produce from "immer";
 
-import {data} from "./mock";
+import { data } from "./mock";
 
 export const buildTree = (arr) => {
   const indexMap = arr.reduce((acc, item, index) => {
@@ -25,13 +25,20 @@ export const buildTree = (arr) => {
 };
 
 export const $activeElementIndex = createStore(null);
+export const $activeElementIndexSection = createStore(null);
 const changeOrder = createEvent();
 
 export const { setActiveIndex } = createApi($activeElementIndex, {
   setActiveIndex: (state, index) => {
     return index
   },
-})
+});
+
+export const { setActiveIndexSection } = createApi($activeElementIndexSection, {
+  setActiveIndexSection: (state, index) => {
+    return index
+  },
+});
 
 export const $elementsStores = data.map((element) => {
   return createStore(element);
@@ -77,8 +84,11 @@ export const updateColor = (index) => (e) => {
 };
 
 export const updateOrder = (index) => (e) => {
+  console.log('index!!!', index, e.target.value)
   const store = $elementsStores[index];
   const storeData = store.getState();
+
+  console.log('storeData', storeData)
 
   store.setState(
     produce(storeData, (draft) => {
@@ -90,6 +100,6 @@ export const updateOrder = (index) => (e) => {
 };
 
 $elementsTree.on(changeOrder, () => {
-  console.log("order updated");
+  console.log("order updated", getStores());
   return buildTree(getStores());
 });

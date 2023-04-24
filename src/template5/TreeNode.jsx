@@ -1,11 +1,13 @@
 import React, {memo} from "react";
 import {Element} from "./Element.jsx";
 import {setActiveIndex} from "./store.js";
+import { useEventListener } from '@mantine/hooks';
 
 export const TreeNode = memo(({ indexTree }) => {
   const handleClick = (index) => (e) => {
     e.stopPropagation();
     setActiveIndex(index[0]);
+    console.log('Index element of array', index)
   }
 
   return (

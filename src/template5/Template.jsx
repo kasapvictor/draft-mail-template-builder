@@ -1,7 +1,7 @@
 // Examples templates
 // https://github.com/rodriguezcommaj/principles-of-email-design
 
-import React,  from "react";
+import React from "react";
 import ReactDOMServer from 'react-dom/server';
 
 // https://github.com/beautify-web/js-beautify
@@ -24,6 +24,7 @@ export const Template = () => {
   )
 };
 
+// CONVERT TO HTML
 const htmlFormatted = (content) => {
   const rawHtml = ReactDOMServer.renderToStaticMarkup(content)
     .replaceAll('&lt;', '<')
@@ -33,5 +34,5 @@ const htmlFormatted = (content) => {
   return beautify.html_beautify(rawHtml, { indent_size: 2, space_in_empty_paren: true })
 }
 const html = htmlFormatted(<RawHtml content={<Content/>}/>);
-console.log(['template5'])
-console.log(html)
+// console.log('>>> template5 to HTML')
+// console.log(html)
