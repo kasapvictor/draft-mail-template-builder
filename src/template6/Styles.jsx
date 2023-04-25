@@ -8,21 +8,21 @@ export const Styles = () => {
       }
 
       body,
-      .wrapper table,
-      .wrapper td,
-      .wrapper a {
+      .canvas table,
+      .canvas td,
+      .canvas a {
         -webkit-text-size-adjust: 100%;
         -ms-text-size-adjust: 100%;
       }
 
-      .wrapper table,
-      .wrapper td {
+      .canvas table,
+      .canvas td {
         border-collapse: collapse !important;
         mso-table-lspace: 0pt;
         mso-table-rspace: 0pt;
       }
 
-      .wrapper img {
+      .canvas img {
         border: 0;
         height: auto;
         line-height: 100%;
@@ -42,10 +42,10 @@ export const Styles = () => {
       }
 
       @media only screen and (max-width: 479px) {
-        .wrapper table {
+        .canvas table {
           max-width: 100%!important;
         }
-        .wrapper td {
+        .canvas td {
           text-align: center!important;
         }
       }
