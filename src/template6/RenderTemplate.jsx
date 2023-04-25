@@ -1,7 +1,7 @@
 import {TableRow} from "./TableRow.jsx";
 import {useStore} from "effector-react";
-import {$elements, $selectedElement, $tree, setElementId} from "./store.js";
-import {createElement, memo} from "react";
+import {$elements, $selectedElement, $tree, resetElementId, setElementId} from "./store.js";
+import {createElement, memo, useState} from "react";
 
 const selfCloseElements = new Set([
   "area",
@@ -30,7 +30,7 @@ const outlineStyle = (isSelected) =>  {
 
 const typeLabelStyle = {
   position: 'absolute',
-  top: -20,
+  top: -22,
   left: -2,
   fontSize: 12,
   color: '#ffffff',
@@ -40,21 +40,30 @@ const typeLabelStyle = {
 };
 
 const Element = memo(({ tag, type, elementId, content, children, props }) => {
+  const [isHovered, setIsHovered] = useState(false);
   const selectedElement = useStore($selectedElement);
   const isSelfCloseElement = tag ? selfCloseElements.has(tag.toLowerCase()) : false;
-  const isSelected = selectedElement === elementId;
+  const isSelected = selectedElement === elementId || isHovered;
   const { style } = props;
 
-  // console.log('selectedElement', selectedElement);
-  // console.log('element', tag, type, elementId, style)
-  // debug
   if (isSelected ) {
     console.log(elementId, isSelected, outlineStyle(isSelected));
   }
 
   const handleClick = (event) => {
     event.stopPropagation();
+    event.preventDefault();
     setElementId({id: event.currentTarget.id});
+  };
+
+  const handleMouseEnter = (event) => {
+    event.stopPropagation();
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = (event) => {
+    event.stopPropagation();
+    setIsHovered(false);
   };
 
   return createElement(
@@ -64,17 +73,19 @@ const Element = memo(({ tag, type, elementId, content, children, props }) => {
       key: elementId,
       id: elementId,
       onClick: handleClick,
-      style: isSelected ? { ...style, ...outlineStyle(isSelected) } : style
+      // onMouseEnter: handleMouseEnter,
+      // onMouseLeave: handleMouseLeave,
+      style: isSelected? { ...style, ...outlineStyle(isSelected) } : style
     },
     isSelfCloseElement
       ? null
       : <>
-          {isSelected && <span style={typeLabelStyle}>{type}</span>}
           {content}
           {children}
+          {isSelected && <span style={typeLabelStyle}>{type}</span>}
         </> // FIXME не должно быть пробелов!
   )
-})
+});
 
 const RenderTree = ({ tree, elements }) => {
   return tree.children.map((node) => {
@@ -97,5 +108,12 @@ export const RenderTemplate = () => {
   const tree = useStore($tree);
   const elements = useStore($elements);
 
-  return <RenderTree tree={tree} elements={elements}/>
+  return (
+    <RenderTree tree={tree} elements={elements}/>
+  )
 }
+
+// FIXME
+//  1 выбираются все элементы по дереву от последнего до первого
+//  2 не подсвечивается тип для картинки, там спан некуда вставлять
+//  3 перерендер при каждом клике из-за выбора элемента
