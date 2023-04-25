@@ -5,7 +5,7 @@ import { Column } from "./Column";
 import { Td } from "./Td";
 import { Tr } from "./Tr";
 
-import {$activeElementIndex, $elementsStores} from "./store";
+import {$activeElementIndex, $elementsStores, setActiveIndex} from "./store";
 import {Section} from "./Section.jsx";
 
 const selfCloseElements = new Set([
@@ -48,7 +48,7 @@ const styles = {
     position: 'absolute',
     fontSize: '.75rem',
     lineHeight: 1.2,
-    top: -15,
+    top: -14,
     left: 0,
     color: '#ffffff',
     backgroundColor: 'rgb(0 13 255)',
@@ -87,7 +87,7 @@ export const Element = ({ element, treeComponent, onClick }) => {
 
   // console.log(item);
 
-  const { component, tag, props, content } = item;
+  const { component, tag, props, content, type } = item;
   const selfCloseElement = tag ? selfCloseElements.has(tag.toLowerCase()) : false;
 
   if (component) {
@@ -98,23 +98,33 @@ export const Element = ({ element, treeComponent, onClick }) => {
     )
   }
 
-  return (
-    <div style={wrapperStyle}
-         onClick={onClick}
-         onMouseEnter={handleMouseEnter}
-         onMouseLeave={handleMouseLeave}
-    >
-      {createElement(tag, { ...props },
-        selfCloseElement ? null :
-          <>
-            {content}
-            {children && <Tree indexTree={children} />}
-          </>
-      )}
-      <span style={nameStyle}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-      >{tag}</span>
-    </div>
-  );
+  const node =
+    createElement(tag, { ...props }, selfCloseElement ? null :
+      <>
+        {content}
+        {children && <Tree indexTree={children} />}
+      </>
+    )
+
+  const isNotSelectedNode = tag === 'tr' || tag === 'td';
+
+  // FIXME этот элемент попадает в итоговый html, надо его удалить оттуда
+  //  если бэкенд будет билдить на своей стороне шаблон то можно забить
+
+  return isNotSelectedNode ? node :
+        <div className="select-element"
+             style={wrapperStyle}
+             onClick={onClick}
+             onMouseEnter={handleMouseEnter}
+             onMouseLeave={handleMouseLeave}
+        >
+          {node}
+          <span style={nameStyle}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+          >{type}</span>
+        </div>
+
+  // return isNotSelectedNode ? node : node;
+
 };
