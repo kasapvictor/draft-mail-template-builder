@@ -26,7 +26,6 @@ export const Template = () => {
         <Content/>
         </div>
       </div>
-
     </div>
   )
 };
