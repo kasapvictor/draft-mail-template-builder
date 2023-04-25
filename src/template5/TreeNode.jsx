@@ -6,8 +6,9 @@ import { useEventListener } from '@mantine/hooks';
 export const TreeNode = memo(({ indexTree }) => {
   const handleClick = (index) => (e) => {
     e.stopPropagation();
-    console.log('index', index);
+
     setActiveIndex(null);
+
     setTimeout(() => {
       setActiveIndex(index[0])
     }, 0)
