@@ -196,10 +196,15 @@ export const tree = {
                           id: 'td1',
                           children: [
                             {
-                              id: 'block1',
+                              id: 'row1',
                               children: [
-                                { id: 'title1' },
-                                { id: 'subtitle1' }
+                                {
+                                  id: 'block1',
+                                  children: [
+                                  { id: 'title1' },
+                                  { id: 'subtitle1' }
+                                ]
+                                }
                               ]
                             }
                           ]
@@ -213,16 +218,21 @@ export const tree = {
                           id: 'td2',
                           children: [
                             {
-                              id: 'block2',
+                              id: 'row2',
                               children: [
-                                { id: 'text1' },
-                                { id: 'link1' }
-                              ]
-                            },
-                            {
-                              id: 'block3',
-                              children: [
-                                { id: 'img1' }
+                                {
+                                  id: 'block2',
+                                  children: [
+                                    { id: 'text1' },
+                                    { id: 'link1' }
+                                  ]
+                                },
+                                {
+                                  id: 'block3',
+                                  children: [
+                                    { id: 'img1' }
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -293,7 +303,7 @@ export const elements = {
   tr1: {
     id: 'tr1',
     tag: 'tr',
-    type: 'row',
+    type: 'tr', // TODO добавить отдельный див с типом row
     props: {
       style: {},
     },
@@ -301,7 +311,7 @@ export const elements = {
   td1: {
     id: "td1",
     tag: 'td',
-    type: 'section',
+    type: 'td',
     props: {
       width:"100%",
       height:"100%",
@@ -312,12 +322,24 @@ export const elements = {
       },
     },
   },
+  row1: {
+    id:"row1",
+    tag:"div",
+    type: 'row',
+    props: {
+      style: {
+        width: '100%',
+        backgroundColor: '#4a93db',
+      }
+    }
+  },
   block1: {
     id:"block1",
     tag:"div",
     type: 'block',
     props: {
       style: {
+        width: '50%',
         backgroundColor: '#4ADB7E',
       }
     }
@@ -347,7 +369,7 @@ export const elements = {
   tr2: {
     id: 'tr2',
     tag: 'tr',
-    type: 'row',
+    type: 'tr',
     props: {
       style: {},
     },
@@ -365,6 +387,17 @@ export const elements = {
         fontSize: 0
       },
     },
+  },
+  row2: {
+    id:"row2",
+    tag:"div",
+    type: 'row',
+    props: {
+      style: {
+        width: '100%',
+        backgroundColor: '#ffe26c',
+      }
+    }
   },
   block2: {
     id:"block2",
@@ -419,9 +452,21 @@ export const elements = {
       }
     }
   },
+  // img1: {
+  //   id:"img1",
+  //   tag:"div",
+  //   type:"img",
+  //   content: `<img src="${IMG_SRC[0]}" style="display:block;width:100%;height:auto;margin:0;" alt="img"/>`,
+  //   props:{
+  //     style:{
+  //       display:'inline-block',
+  //     },
+  //   }
+  // }
   img1: {
     id:"img1",
     tag:"img",
+    type:"img",
     props:{
       src:IMG_SRC[0],
       alt:"img",
