@@ -1,6 +1,6 @@
 import {useStore} from "effector-react";
 import {$elements, $selectedElement, $tree, resetElementId, setElementId} from "./store.js";
-import {createElement, memo, useRef, useState} from "react";
+import {createElement, memo, useEffect, useMemo, useRef, useState} from "react";
 
 const selfCloseElements = new Set([
   "area",
@@ -35,7 +35,7 @@ const useStyles = (isSelected, isHovered) => {
 
   return {
     outlineStyle: {
-      outline: isSelected || isHovered ? `1px solid ${borderColor}` : '',
+      outline: isSelected || isHovered ? `1px solid ${borderColor}` : 'none',
       // position: 'relative',
       outlineOffset: '-1px',
       cursor: 'default',
@@ -53,29 +53,7 @@ const useStyles = (isSelected, isHovered) => {
   }
 }
 
-
-
-const RenderElement = memo(({ tag, type, elementId, content, children, props }) => {
-  const isSelfCloseElement = tag ? selfCloseElements.has(tag.toLowerCase()) : false;
-  const isSpecialType = type ? specialTypes.has(type.toLocaleString()) : false;
-
-  const selectedElement = useStore($selectedElement);
-  const isSelected = selectedElement === elementId;
-  const [isHovered, setIsHovered] = useState(false);
-
-  const styles = useStyles(isSelected, isHovered)
-  const { style, ...otherProps } = props;
-  const ref = useRef(null);
-
-  let rect;
-  if (ref.current) {
-    rect = ref.current.getBoundingClientRect();
-  }
-
-  if (isSelected) {
-    console.log('props', props)
-  }
-
+const useElementHandlers = ({type, isSelected, setIsHovered, isSpecialType}) => {
   const handleClick = (event) => {
     event.stopPropagation();
     event.preventDefault();
@@ -103,6 +81,100 @@ const RenderElement = memo(({ tag, type, elementId, content, children, props }) 
     }
   };
 
+  return { handleClick, handleMouseEnter, handleMouseLeave }
+}
+
+const useUpdateLabelPosition = (ref, isSelected, isHovered) => {
+  const [labelPosition, setLabelPosition] = useState({});
+
+  useEffect(() => {
+    if (ref.current) {
+      const updateLabelPosition = () => {
+        const rect = ref.current.getBoundingClientRect();
+        setLabelPosition({ top: `${rect.top - 18}px`, left: `${rect.left}px` });
+      };
+
+      const handleResize = () => {
+        requestAnimationFrame(updateLabelPosition);
+      };
+
+      window.addEventListener('resize', handleResize);
+
+      handleResize();
+
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, [ref.current]);
+
+  return isSelected || isHovered ? labelPosition : null;
+}
+const ElementLabel = ({ refElement, isSelected, isHovered, children }) => {
+  const labelPosition2 = useUpdateLabelPosition(refElement, isSelected, isHovered)
+  const initialStyles = {
+    position: 'absolute',
+    fontSize: 12,
+    color: '#ffffff',
+    fontWeight: 400,
+    backgroundColor: '#007BFF',
+    padding: '0px 4px',
+    borderTopRightRadius: 3,
+    borderTopLeftRadius: 3,
+  };
+
+  const getLabelPosition = () => {
+    if (refElement.current) {
+      const rect = refElement.current.getBoundingClientRect();
+      return { top: `${rect.top - 18}px`, left: `${rect.left}px` };
+    }
+    return {};
+  };
+
+  const [labelPosition, setLabelPosition] = useState({...initialStyles, ...getLabelPosition()});
+
+  useEffect(() => {
+    if (refElement.current) {
+      const updateLabelPosition = () => {
+        const rect = refElement.current.getBoundingClientRect();
+        setLabelPosition((prevStyle) => {
+          return {...prevStyle, top: `${rect.top - 18}px`, left: `${rect.left}px`};
+        });
+      }
+
+      // updateLabelPosition();
+      const handleResize = () => {
+        requestAnimationFrame(updateLabelPosition);
+      };
+
+      window.addEventListener('resize', handleResize);
+
+      handleResize();
+
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      }
+    }
+  }, [refElement.current])
+
+  return (
+    <span style={{...initialStyles, ...labelPosition2}}>{children}</span>
+  )
+}
+
+const RenderElement = memo(({ tag, type, elementId, content, children, props }) => {
+  const isSelfCloseElement = tag ? selfCloseElements.has(tag.toLowerCase()) : false;
+  const isSpecialType = type ? specialTypes.has(type.toLocaleString()) : false;
+
+  const selectedElement = useStore($selectedElement);
+  const isSelected = selectedElement === elementId;
+  const [isHovered, setIsHovered] = useState(false);
+  const { handleClick, handleMouseEnter, handleMouseLeave } = useElementHandlers({type, isSelected, setIsHovered, isSpecialType})
+
+  const styles = useStyles(isSelected, isHovered)
+  const { style, ...otherProps } = props;
+  const ref = useRef(null);
+  const labelPosition = useUpdateLabelPosition(ref, isSelected, isHovered)
 
   return (
     <>
@@ -128,114 +200,12 @@ const RenderElement = memo(({ tag, type, elementId, content, children, props }) 
         )
       }
       {
-        ref.current && isSelected || isHovered
-        ? <span
-            key={`${elementId}-label`}
-            style={{ ...styles.typeLabelStyle, top: `${rect.top - 18}px`, left: `${rect.left}px`}}>
-              {type}
-          </span>
+        labelPosition
+        ? <span key={`${elementId}-label`} style={{ ...styles.typeLabelStyle, ...labelPosition}}> {type} </span>
         : null
       }
     </>
   )
-
-  // 3 картинка выбирается
-  // if (type === 'img') {
-  //   return (
-  //     <>
-  //       <Tag
-  //         ref={ref}
-  //         {...props}
-  //         id={elementId}
-  //         key={elementId}
-  //         onClick={handleClick}
-  //         style={{...style, ...outlineStyle}}/>
-  //       { ref.current && isSelected ? label : null }
-  //     </>
-  //   );
-  // }
-  //
-  // return (
-  //   <Tag
-  //     ref={ref}
-  //     {...props}
-  //     id={elementId}
-  //     key={elementId}
-  //     onClick={handleClick}
-  //     style={{...style, ...outlineStyle}}>
-  //       {content}{children}
-  //       { ref.current && isSelected ? label : null }
-  //   </Tag>
-  // );
-
-
-  // return (
-  //   <>
-  //     {createElement(
-  //       tag,
-  //       {
-  //         ...props,
-  //         key: elementId,
-  //         id: elementId,
-  //         onClick: handleClick,
-  //         // onMouseEnter: handleMouseEnter,
-  //         // onMouseLeave: handleMouseLeave,
-  //         style: {...style, cursor: 'default'}
-  //       },
-  //       isSelfCloseElement
-  //         ? null
-  //         : <>
-  //           {content}
-  //           {children}
-  //         </>
-  //     )}
-  //     {isSelected ? <style key={`styles-${elementId}`}>{inlineStyles}</style> : ''}
-  //   </>
-  // )
-
-  // 2 костыльное изображение
-  // return (
-  //   <>
-  //     {createElement(
-  //         tag,
-  //         {
-  //           ...props,
-  //           key: elementId,
-  //           id: elementId,
-  //           onClick: handleClick,
-  //           // onMouseEnter: handleMouseEnter,
-  //           // onMouseLeave: handleMouseLeave,
-  //           style: {...style, cursor: 'default'}
-  //         },
-  //         isSelfCloseElement
-  //           ? null
-  //           : <>
-  //               {type === 'img' ? <div dangerouslySetInnerHTML={{ __html: content }}></div> : content}
-  //               {children}
-  //             </>
-  //       )}
-  //       {isSelected ? <style key={`styles-${elementId}`}>{inlineStyles}</style> : ''}
-  //   </>
-  // )
-
-  // 1 не работают подсказки для изображений
-  // return createElement(
-  //   tag,
-  //   {
-  //     ...props,
-  //     key: elementId,
-  //     id: elementId,
-  //     onClick: handleClick,
-  //     style: {...style, ...outlineStyle}
-  //   },
-  //   isSelfCloseElement
-  //     ? null
-  //     : <>
-  //         {content}
-  //         {children}
-  //         {isSelected ? <span style={typeLabelStyle}>{type}</span> : ''}
-  //       </>
-  // )
 });
 
 const RenderTree = ({ tree, elements }) => {
