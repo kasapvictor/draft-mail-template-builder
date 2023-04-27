@@ -175,6 +175,7 @@ export const elements = {
     tag:"h1",
     type: 'title',
     content:"Заголовок",
+    contentEditable: true,
     props: {
       style: {
         fontSize: 16,

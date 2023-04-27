@@ -3,6 +3,12 @@ import {useStore, useStoreMap} from "effector-react";
 
 import {$elements, $selectedElement, handleContent} from "./store.js";
 
+const settingsRowStyles = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'start',
+  gap: 10
+}
 const useSelectedElement = (selectedElementId) => {
   return useStoreMap({
     store: $elements,
@@ -14,15 +20,27 @@ const useSelectedElement = (selectedElementId) => {
 const Content = memo(({element}) => {
   const content = element?.content;
 
-  if (!content) {
+  if (content === undefined) {
     return null;
   }
 
+  const handleBlur = () => {
+    if (!content.length) {
+      handleContent({
+        elementId: element.id,
+        value: 'Default value',
+      })
+    }
+  }
+
   return (
-    <div>
+    <div style={settingsRowStyles}>
+      <label htmlFor={`${element.id}-${element.type}`} style={{textTransform: 'capitalize'}}>{element.type}:</label>
       <input
         type="text"
         value={element.content}
+        onBlur={handleBlur}
+        id={`${element.id}-${element.type}`}
         onChange={(e) => handleContent({
           elementId: element.id,
           value: e.target.value,
