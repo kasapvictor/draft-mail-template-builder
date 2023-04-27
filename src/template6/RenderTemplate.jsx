@@ -1,6 +1,6 @@
-import {useStore} from "effector-react";
+import {useStore, useStoreMap} from "effector-react";
 import {$elements, $selectedElement, $tree, resetElementId, setElementId} from "./store.js";
-import {createElement, memo, useEffect, useMemo, useRef, useState} from "react";
+import {createElement, memo, useCallback, useEffect, useMemo, useRef, useState} from "react";
 
 const selfCloseElements = new Set([
   "area",
@@ -30,59 +30,8 @@ const specialTypes = new Set([
   'section',
 ])
 
-const useStyles = (isSelected, isHovered) => {
-  const borderColor = '#007BFF';
 
-  return {
-    outlineStyle: {
-      outline: isSelected || isHovered ? `1px solid ${borderColor}` : 'none',
-      // position: 'relative',
-      outlineOffset: '-1px',
-      cursor: 'default',
-    },
-    typeLabelStyle: {
-      position: 'absolute',
-      fontSize: 12,
-      color: '#ffffff',
-      fontWeight: 400,
-      backgroundColor: borderColor,
-      padding: '0px 4px',
-      borderTopRightRadius: 3,
-      borderTopLeftRadius: 3,
-    },
-  }
-}
-
-const useElementHandlers = ({type, isSelected, setIsHovered, isSpecialType}) => {
-  const handleClick = (event) => {
-    event.stopPropagation();
-    event.preventDefault();
-
-    if (type === 'canvas') {
-      resetElementId()
-    }
-
-    if (!isSelected && !isSpecialType) {
-      setElementId({id: event.currentTarget.id});
-    }
-  };
-
-  const handleMouseEnter = (event) => {
-    if (!isSelected && !isSpecialType) {
-      event.stopPropagation();
-      setIsHovered(true);
-    }
-  };
-
-  const handleMouseLeave = (event) => {
-    if (!isSpecialType) {
-      event.stopPropagation();
-      setIsHovered(false);
-    }
-  };
-
-  return { handleClick, handleMouseEnter, handleMouseLeave }
-}
+const borderColor = '#007BFF';
 
 const useUpdateLabelPosition = (ref, isSelected, isHovered) => {
   const [labelPosition, setLabelPosition] = useState({});
@@ -110,9 +59,9 @@ const useUpdateLabelPosition = (ref, isSelected, isHovered) => {
 
   return isSelected || isHovered ? labelPosition : null;
 }
-const ElementLabel = ({ refElement, isSelected, isHovered, children }) => {
-  const labelPosition2 = useUpdateLabelPosition(refElement, isSelected, isHovered)
-  const initialStyles = {
+
+const RenderElementLabel = ({refElement, isSelected, isHovered, children}) => {
+  const styles = {
     position: 'absolute',
     fontSize: 12,
     color: '#ffffff',
@@ -123,58 +72,66 @@ const ElementLabel = ({ refElement, isSelected, isHovered, children }) => {
     borderTopLeftRadius: 3,
   };
 
-  const getLabelPosition = () => {
-    if (refElement.current) {
-      const rect = refElement.current.getBoundingClientRect();
-      return { top: `${rect.top - 18}px`, left: `${rect.left}px` };
+  const labelPosition = useUpdateLabelPosition(refElement, isSelected, isHovered);
+
+  return labelPosition
+    ? <span style={{ ...styles, ...labelPosition}}> {children} </span>
+    : null
+}
+
+const useElementHandlers = ({type, isSelected, isSpecialType}) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleClick = useCallback((event) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    if (type === 'canvas') {
+      resetElementId()
     }
-    return {};
-  };
 
-  const [labelPosition, setLabelPosition] = useState({...initialStyles, ...getLabelPosition()});
-
-  useEffect(() => {
-    if (refElement.current) {
-      const updateLabelPosition = () => {
-        const rect = refElement.current.getBoundingClientRect();
-        setLabelPosition((prevStyle) => {
-          return {...prevStyle, top: `${rect.top - 18}px`, left: `${rect.left}px`};
-        });
-      }
-
-      // updateLabelPosition();
-      const handleResize = () => {
-        requestAnimationFrame(updateLabelPosition);
-      };
-
-      window.addEventListener('resize', handleResize);
-
-      handleResize();
-
-      return () => {
-        window.removeEventListener('resize', handleResize);
-      }
+    if (!isSelected && !isSpecialType) {
+      setElementId({id: event.currentTarget.id});
     }
-  }, [refElement.current])
+  }, [type, isSelected, isSpecialType]);
 
-  return (
-    <span style={{...initialStyles, ...labelPosition2}}>{children}</span>
-  )
+  const handleMouseEnter = useCallback((event) => {
+    if (!isSelected && !isSpecialType) {
+      event.stopPropagation();
+      setIsHovered(true);
+    }
+  }, [isSelected, isSpecialType]);
+
+  const handleMouseLeave = useCallback((event) => {
+    if (!isSpecialType) {
+      event.stopPropagation();
+      setIsHovered(false);
+    }
+  }, [isSpecialType]);
+
+  return { isHovered, handleClick, handleMouseEnter, handleMouseLeave }
 }
 
 const RenderElement = memo(({ tag, type, elementId, content, children, props }) => {
   const isSelfCloseElement = tag ? selfCloseElements.has(tag.toLowerCase()) : false;
   const isSpecialType = type ? specialTypes.has(type.toLocaleString()) : false;
 
-  const selectedElement = useStore($selectedElement);
-  const isSelected = selectedElement === elementId;
-  const [isHovered, setIsHovered] = useState(false);
-  const { handleClick, handleMouseEnter, handleMouseLeave } = useElementHandlers({type, isSelected, setIsHovered, isSpecialType})
+  // memorized store
+  const isSelected = useStoreMap({
+    store: $selectedElement,
+    keys: [elementId],
+    fn: (selectedElement, [id]) => selectedElement === id,
+  });
+  const refElement = useRef(null);
+  const { isHovered, handleClick, handleMouseEnter, handleMouseLeave } = useElementHandlers({type, isSelected, isSpecialType})
 
-  const styles = useStyles(isSelected, isHovered)
   const { style, ...otherProps } = props;
-  const ref = useRef(null);
-  const labelPosition = useUpdateLabelPosition(ref, isSelected, isHovered)
+  const elementStyles = {
+    ...style,
+    outline: isSelected || isHovered ? `1px solid ${borderColor}` : 'none',
+    outlineOffset: '-1px',
+    cursor: 'default',
+  }
 
   return (
     <>
@@ -182,14 +139,14 @@ const RenderElement = memo(({ tag, type, elementId, content, children, props }) 
         createElement(
           tag,
           {
-            ref,
             ...otherProps,
+            ref: refElement,
             key: elementId,
             id: elementId,
             onClick: handleClick,
             onMouseEnter: handleMouseEnter,
             onMouseLeave: handleMouseLeave,
-            style: {...style, ...styles.outlineStyle}
+            style: {...elementStyles}
           },
           isSelfCloseElement
             ? null
@@ -199,11 +156,13 @@ const RenderElement = memo(({ tag, type, elementId, content, children, props }) 
             </>
         )
       }
-      {
-        labelPosition
-        ? <span key={`${elementId}-label`} style={{ ...styles.typeLabelStyle, ...labelPosition}}> {type} </span>
-        : null
-      }
+      <RenderElementLabel
+        key={`${elementId}-label`}
+        refElement={refElement}
+        isSelected={isSelected}
+        isHovered={isHovered}>
+          {type}
+      </RenderElementLabel>
     </>
   )
 });
