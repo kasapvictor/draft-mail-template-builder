@@ -1,6 +1,16 @@
 import {useStore, useStoreMap} from "effector-react";
-import {$elements, $selectedElement, $tree, resetElementId, setElementId} from "./store.js";
+import {
+  $elements,
+  $hoveredElementRef,
+  $selectedElement,
+  $selectedElementRef,
+  $tree,
+  hoverElementRef,
+  resetElementId, selectElementRef,
+  setElementId
+} from "./store.js";
 import {createElement, memo, useCallback, useEffect, useMemo, useRef, useState} from "react";
+import {createPortal} from "react-dom";
 
 const selfCloseElements = new Set([
   "area",
@@ -93,6 +103,7 @@ const useElementHandlers = ({type, isSelected, isSpecialType}) => {
     }
 
     if (!isSelected && !isSpecialType) {
+      selectElementRef(event.currentTarget)
       setElementId({id: event.currentTarget.id});
     }
   }, [type, isSelected, isSpecialType]);
@@ -100,6 +111,8 @@ const useElementHandlers = ({type, isSelected, isSpecialType}) => {
   const handleMouseEnter = useCallback((event) => {
     if (!isSelected && !isSpecialType) {
       event.stopPropagation();
+      // console.log(event.target.getBoundingClientRect());
+      hoverElementRef(event.currentTarget)
       setIsHovered(true);
     }
   }, [isSelected, isSpecialType]);
@@ -107,6 +120,7 @@ const useElementHandlers = ({type, isSelected, isSpecialType}) => {
   const handleMouseLeave = useCallback((event) => {
     if (!isSpecialType) {
       event.stopPropagation();
+      hoverElementRef(null);
       setIsHovered(false);
     }
   }, [isSpecialType]);
@@ -147,7 +161,7 @@ const RenderElement = memo(({ elementId, children }) => {
     ...style,
     cursor: 'default',
     outlineOffset: '-1px',
-    // position: isSelected || isHovered  ? "relative" : "static",
+    position: isSelected || isHovered  ? "relative" : "static",
     outlineWidth: isSelected || isHovered ? '1px' : '0px',
     outlineColor: isSelected || isHovered ? borderColor : 'none',
     outlineStyle: isEmptyContent ? 'dashed' : 'solid',
@@ -162,8 +176,9 @@ const RenderElement = memo(({ elementId, children }) => {
           {
             ...otherProps,
             ref: refElement,
-            key: elementId,
             id: elementId,
+            key: elementId,
+            'data-type': type,
             onClick: handleClick,
             onMouseEnter: handleMouseEnter,
             onMouseLeave: handleMouseLeave,
@@ -180,15 +195,15 @@ const RenderElement = memo(({ elementId, children }) => {
       {/* FIXME надо переделать реализацию лейбла потому что если удалить какой-то контент то все блоки под ним едут а лейбл остается в тоже позиции что и был*/}
       {/* FIXME надо подумать над альтернативным решением как выводить лейбл с типом в псевдоэлементе ::after */}
       {
-        isSpecialType
-          ? null
-          : <RenderElementLabel
-            key={`${elementId}-label`}
-            refElement={refElement}
-            isSelected={isSelected}
-            isHovered={isHovered}>
-              {type}
-          </RenderElementLabel>
+        // isSpecialType
+        //   ? null
+        //   : <RenderElementLabel
+        //     key={`${elementId}-label`}
+        //     refElement={refElement}
+        //     isSelected={isSelected}
+        //     isHovered={isHovered}>
+        //       {type}
+        //   </RenderElementLabel>
       }
     </>
   )
@@ -209,8 +224,59 @@ export const RenderTemplate = () => {
   const tree = useStore($tree);
 
   return (
-    <RenderTree tree={tree}/>
+    <>
+      <RenderTree tree={tree}/>
+      <ElementLabelSelected />
+      <ElementLabelHovered />
+    </>
   )
 }
 
+// LABEl
+const labelStyle = {
+  position: "absolute",
+  backgroundColor: "#ff0",
+  padding: "2px 4px",
+  fontSize: "12px",
+  fontWeight: "bold",
+  zIndex: 1000,
+};
+
+const useLabelElementPosition = ({element}) => {
+  const rect = element.getBoundingClientRect();
+  const top = rect.top + window.scrollY - 22;
+  const left = rect.left + window.scrollX;
+
+  return {top, left};
+}
+
+const ElementLabelSelected = () => {
+  const targetElement =useStore($selectedElementRef);
+
+  if (!targetElement) {
+    return null;
+  }
+
+  const {top, left} = useLabelElementPosition({element: targetElement})
+
+  return createPortal(
+    <div style={{ ...labelStyle, top, left }}>{targetElement.dataset.type}</div>,
+    document.body
+  );
+};
+
+const ElementLabelHovered = () => {
+  const targetElement = useStore($hoveredElementRef);
+
+  if (!targetElement) {
+    return null;
+  }
+
+  const {top, left} = useLabelElementPosition({element: targetElement})
+
+  return createPortal(
+    <div style={{ ...labelStyle, top, left }}>{targetElement.dataset.type}</div>,
+    document.body
+  );
+};
 

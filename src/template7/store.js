@@ -1,14 +1,14 @@
-import {createStore, createApi, createEffect} from "effector";
+import {createStore, createApi, createEffect, createEvent} from "effector";
 
 import { tree, elements} from './mock.js'
 import produce from "immer";
-
 
 export const $tree = createStore(tree);
 
 export const $elements = createStore(elements);
 
 export const $selectedElement = createStore(null);
+
 export const { setElementId, resetElementId } = createApi($selectedElement,{
   setElementId: (state, payload) => {
     return payload.id;
@@ -62,3 +62,16 @@ $selectedElement.watch((id) => {
 })
 
 
+// TO SHOW LABEL
+export const $hoveredElementRef = createStore(null);
+export const $selectedElementRef = createStore(null);
+export const selectElementRef = createEvent('select-element');
+export const hoverElementRef = createEvent('hover-element');
+
+$selectedElementRef.on(selectElementRef, (_, element) => {
+  return element
+});
+
+$hoveredElementRef.on(hoverElementRef, (_, element) => {
+  return element
+});
