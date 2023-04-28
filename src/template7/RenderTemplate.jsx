@@ -113,16 +113,16 @@ const RenderElement = memo(({ elementId, children }) => {
     : {};
 
   const { style, ...otherProps } = props;
-  const elementStyles = {
+  const elementStyles = useMemo(() => ({
     ...style,
     cursor: 'default',
     outlineOffset: '-1px',
     position: isSelected || isHovered  ? "relative" : "static",
     outlineWidth: isSelected || isHovered ? '1px' : '0px',
     outlineColor: isSelected || isHovered ? mainColor : 'none',
-    outlineStyle: isEmptyContent ? 'dashed' : 'solid',
+    outlineStyle: isEmptyContent || isFontSizeZero ? 'dashed' : 'solid',
     ...emptyStyles,
-  }
+  }), [style, isSelected, isHovered, isEmptyContent, emptyStyles])
 
   return (
     <>
