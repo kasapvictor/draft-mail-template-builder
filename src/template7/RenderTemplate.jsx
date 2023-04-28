@@ -29,6 +29,9 @@ const specialTypes = new Set([
   'row',
   'section',
 ]);
+const contentEditable = new Set([
+  'title', 'text','link', 'button'
+]);
 
 
 const borderColor = '#007BFF';
@@ -62,7 +65,7 @@ const useUpdateLabelPosition = (ref, isSelected, isHovered) => {
 
 const RenderElementLabel = ({refElement, isSelected, isHovered, children}) => {
   const styles = {
-    // display: isSelected || isHovered ? 'block' : 'none',
+    display: isSelected || isHovered ? 'block' : 'none',
     position: 'absolute',
     fontSize: 12,
     color: '#ffffff',
@@ -75,9 +78,7 @@ const RenderElementLabel = ({refElement, isSelected, isHovered, children}) => {
 
   const labelPosition = useUpdateLabelPosition(refElement, isSelected, isHovered);
 
-  return labelPosition
-    ? <span style={{ ...styles, ...labelPosition}}> {children} </span>
-    : null
+  return (<span style={{ ...styles, ...labelPosition}}> {children} </span>)
 }
 
 const useElementHandlers = ({type, isSelected, isSpecialType}) => {
@@ -122,6 +123,7 @@ const RenderElement = memo(({ elementId, children }) => {
 
   const isSelfCloseElement = tag ? selfCloseElements.has(tag.toLowerCase()) : false;
   const isSpecialType = type ? specialTypes.has(type.toLocaleString()) : false;
+  const isContentEditable = contentEditable.has(type);
 
   // memorized store
   const isSelected = useStoreMap({
@@ -132,13 +134,26 @@ const RenderElement = memo(({ elementId, children }) => {
   const refElement = useRef(null);
   const { isHovered, handleClick, handleMouseEnter, handleMouseLeave } = useElementHandlers({type, isSelected, isSpecialType})
 
+  console.log('content', content)
+
+  const isEmptyContent = isContentEditable && !content.length;
+  const emptyStyles = isEmptyContent
+    ? {
+      minHeight: '20px',
+      outlineWidth: `1px ${borderColor} dashed`,
+    }
+    : {};
+
   const { style, ...otherProps } = props;
   const elementStyles = {
     ...style,
-    outline: isSelected || isHovered ? `1px solid ${borderColor}` : 'none',
-    outlineOffset: '-1px',
     cursor: 'default',
-    position: isSelected || isHovered  ? "relative" : "static",
+    outlineOffset: '-1px',
+    // position: isSelected || isHovered  ? "relative" : "static",
+    outlineWidth: isSelected || isHovered ? '1px' : '0px',
+    outlineColor: isSelected || isHovered ? borderColor : 'none',
+    outlineStyle: isEmptyContent ? 'dashed' : 'solid',
+    ...emptyStyles,
   }
 
   return (
@@ -164,13 +179,18 @@ const RenderElement = memo(({ elementId, children }) => {
             </>
         )
       }
-      <RenderElementLabel
-        key={`${elementId}-label`}
-        refElement={refElement}
-        isSelected={isSelected}
-        isHovered={isHovered}>
-          {type}
-      </RenderElementLabel>
+      {/* FIXME надо подумать над альтернативным решением как выводить лейбл с типом в псевдоэлементе ::after */}
+      {
+        isSpecialType
+          ? null
+          : <RenderElementLabel
+            key={`${elementId}-label`}
+            refElement={refElement}
+            isSelected={isSelected}
+            isHovered={isHovered}>
+              {type}
+          </RenderElementLabel>
+      }
     </>
   )
 });
@@ -193,4 +213,5 @@ export const RenderTemplate = () => {
     <RenderTree tree={tree}/>
   )
 }
+
 

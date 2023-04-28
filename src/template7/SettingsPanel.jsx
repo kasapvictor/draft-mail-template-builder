@@ -29,10 +29,10 @@ const Content = memo(({element}) => {
 
   const handleBlur = () => {
     if (!element.content.length) {
-      handleContent({
-        elementId: element.id,
-        value: 'Default value',
-      })
+      // handleContent({
+      //   elementId: element.id,
+      //   value: 'Default value',
+      // })
     }
   }
 
