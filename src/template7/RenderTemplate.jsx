@@ -28,7 +28,7 @@ const specialTypes = new Set([
   'block',
   'row',
   'section',
-])
+]);
 
 
 const borderColor = '#007BFF';

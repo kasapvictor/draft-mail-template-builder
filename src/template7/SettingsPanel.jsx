@@ -3,12 +3,17 @@ import {useStore, useStoreMap} from "effector-react";
 
 import {$elements, $selectedElement, handleContent} from "./store.js";
 
+const contentEditable = new Set([
+  'title', 'text','link', 'button'
+]);
+
 const settingsRowStyles = {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'start',
-  gap: 10
+  gap: 4
 }
+
 const useSelectedElement = (selectedElementId) => {
   return useStoreMap({
     store: $elements,
@@ -18,14 +23,12 @@ const useSelectedElement = (selectedElementId) => {
 };
 
 const Content = memo(({element}) => {
-  const content = element?.content;
-
-  if (content === undefined) {
+  if (!element || !contentEditable.has(element.type)) {
     return null;
   }
 
   const handleBlur = () => {
-    if (!content.length) {
+    if (!element.content.length) {
       handleContent({
         elementId: element.id,
         value: 'Default value',
