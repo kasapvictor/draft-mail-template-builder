@@ -1,4 +1,4 @@
-import {memo} from "react";
+import {memo, useEffect} from "react";
 import {useStore, useStoreMap} from "effector-react";
 
 import {
@@ -204,7 +204,7 @@ export const SettingsPanel = () => {
   const selectedElementId = useStore($selectedElement);
   const element = useSelectedElement(selectedElementId);
 
-  console.log('ELEMENT', element);
+  console.log('SETTINGS ELEMENT', element);
 
   return (
     <div className="setting-panel">

@@ -44,52 +44,7 @@ const contentEditable = new Set([
 ]);
 
 
-const borderColor = '#007BFF';
-
-const useUpdateLabelPosition = (ref, isSelected, isHovered) => {
-  const [labelPosition, setLabelPosition] = useState({});
-
-  useEffect(() => {
-    if (ref.current) {
-      const updateLabelPosition = () => {
-        const rect = ref.current.getBoundingClientRect();
-        setLabelPosition({ top: `${rect.top - 18}px`, left: `${rect.left}px` });
-      };
-
-      const handleResize = () => {
-        requestAnimationFrame(updateLabelPosition);
-      };
-
-      window.addEventListener('resize', handleResize);
-
-      handleResize();
-
-      return () => {
-        window.removeEventListener('resize', handleResize);
-      };
-    }
-  }, [ref.current]);
-
-  return isSelected || isHovered ? labelPosition : null;
-}
-
-const RenderElementLabel = ({refElement, isSelected, isHovered, children}) => {
-  const styles = {
-    display: isSelected || isHovered ? 'block' : 'none',
-    position: 'absolute',
-    fontSize: 12,
-    color: '#ffffff',
-    fontWeight: 400,
-    backgroundColor: '#007BFF',
-    padding: '0px 4px',
-    borderTopRightRadius: 3,
-    borderTopLeftRadius: 3,
-  };
-
-  const labelPosition = useUpdateLabelPosition(refElement, isSelected, isHovered);
-
-  return (<span style={{ ...styles, ...labelPosition}}> {children} </span>)
-}
+const mainColor = '#007BFF';
 
 const useElementHandlers = ({type, isSelected, isSpecialType}) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -149,10 +104,11 @@ const RenderElement = memo(({ elementId, children }) => {
   const { isHovered, handleClick, handleMouseEnter, handleMouseLeave } = useElementHandlers({type, isSelected, isSpecialType})
 
   const isEmptyContent = isContentEditable && !content.length;
-  const emptyStyles = isEmptyContent
+  const isFontSizeZero = isContentEditable && props?.style?.fontSize === '0px';
+  const emptyStyles = isEmptyContent || isFontSizeZero
     ? {
       minHeight: '20px',
-      outlineWidth: `1px ${borderColor} dashed`,
+      outlineWidth: `1px ${mainColor} dashed`,
     }
     : {};
 
@@ -163,7 +119,7 @@ const RenderElement = memo(({ elementId, children }) => {
     outlineOffset: '-1px',
     position: isSelected || isHovered  ? "relative" : "static",
     outlineWidth: isSelected || isHovered ? '1px' : '0px',
-    outlineColor: isSelected || isHovered ? borderColor : 'none',
+    outlineColor: isSelected || isHovered ? mainColor : 'none',
     outlineStyle: isEmptyContent ? 'dashed' : 'solid',
     ...emptyStyles,
   }
@@ -192,19 +148,6 @@ const RenderElement = memo(({ elementId, children }) => {
             </>
         )
       }
-      {/* FIXME надо переделать реализацию лейбла потому что если удалить какой-то контент то все блоки под ним едут а лейбл остается в тоже позиции что и был*/}
-      {/* FIXME надо подумать над альтернативным решением как выводить лейбл с типом в псевдоэлементе ::after */}
-      {
-        // isSpecialType
-        //   ? null
-        //   : <RenderElementLabel
-        //     key={`${elementId}-label`}
-        //     refElement={refElement}
-        //     isSelected={isSelected}
-        //     isHovered={isHovered}>
-        //       {type}
-        //   </RenderElementLabel>
-      }
     </>
   )
 });
@@ -226,8 +169,7 @@ export const RenderTemplate = () => {
   return (
     <>
       <RenderTree tree={tree}/>
-      <ElementLabelSelected />
-      <ElementLabelHovered />
+      <ElementLabel/>
     </>
   )
 }
@@ -235,48 +177,80 @@ export const RenderTemplate = () => {
 // LABEl
 const labelStyle = {
   position: "absolute",
-  backgroundColor: "#ff0",
+  backgroundColor: "#007BFF",
+  color: '#FFFFFF',
+  fontWeight: 400,
   padding: "2px 4px",
   fontSize: "12px",
-  fontWeight: "bold",
   zIndex: 1000,
 };
 
-const useLabelElementPosition = ({element}) => {
-  const rect = element.getBoundingClientRect();
-  const top = rect.top + window.scrollY - 22;
-  const left = rect.left + window.scrollX;
+const useLabelElementPosition = (element) => {
+  const [position, setPosition] = useState(null);
 
-  return {top, left};
+  useEffect(() => {
+    if (element) {
+
+      const updatePosition = () => {
+        const rect = element.getBoundingClientRect();
+        const top = rect.top + window.scrollY - 22;
+        const left = rect.left + window.scrollX;
+        setPosition({ top, left });
+      };
+
+      const resizeObserver = new ResizeObserver(() => {
+        updatePosition();
+      });
+
+      const mutationObserver = new MutationObserver(() => {
+        updatePosition();
+      });
+
+      resizeObserver.observe(element);
+      mutationObserver.observe(element, { attributes: true, childList: true, subtree: true });
+
+      updatePosition();
+
+      return () => {
+        resizeObserver.disconnect();
+        mutationObserver.disconnect();
+      };
+
+    } else {
+      setPosition(null);
+    }
+  }, [element]);
+
+  return position;
 }
 
 const ElementLabelSelected = () => {
-  const targetElement =useStore($selectedElementRef);
+  const target = useStore($selectedElementRef);
+  const position = useLabelElementPosition(target);
 
-  if (!targetElement) {
-    return null;
-  }
-
-  const {top, left} = useLabelElementPosition({element: targetElement})
-
-  return createPortal(
-    <div style={{ ...labelStyle, top, left }}>{targetElement.dataset.type}</div>,
+  return target && createPortal(
+    <div style={{ ...labelStyle, ...position }}>{target.dataset.type}</div>,
     document.body
   );
 };
 
 const ElementLabelHovered = () => {
-  const targetElement = useStore($hoveredElementRef);
+  const target = useStore($hoveredElementRef);
+  const position = useLabelElementPosition(target);
 
-  if (!targetElement) {
-    return null;
-  }
 
-  const {top, left} = useLabelElementPosition({element: targetElement})
-
-  return createPortal(
-    <div style={{ ...labelStyle, top, left }}>{targetElement.dataset.type}</div>,
+  return target && createPortal(
+    <div style={{ ...labelStyle, ...position }}>{target.dataset.type}</div>,
     document.body
   );
 };
+
+const ElementLabel = () => {
+  return (
+    <>
+      <ElementLabelSelected />
+      <ElementLabelHovered />
+    </>
+  )
+}
 
