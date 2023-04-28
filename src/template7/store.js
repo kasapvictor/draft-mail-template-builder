@@ -1,6 +1,7 @@
 import {createStore, createApi, createEffect} from "effector";
 
 import { tree, elements} from './mock.js'
+import produce from "immer";
 
 
 export const $tree = createStore(tree);
@@ -20,15 +21,10 @@ export const { setElementId, resetElementId } = createApi($selectedElement,{
 export const {handleContent } = createApi($elements, {
   handleContent: (state, payload) => {
     const {elementId, value} = payload;
-    const element = state[elementId];
-    element.content = value;
 
-    return {
-      ...state,
-      [elementId]: {
-        ...element,
-      }
-    }
+    return produce(state, (draft) => {
+      draft[elementId].content = value;
+    });
   }
 });
 
