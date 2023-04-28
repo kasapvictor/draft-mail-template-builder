@@ -206,12 +206,14 @@ const useLabelElementPosition = (element) => {
         updatePosition();
       });
 
+      window.addEventListener('resize', updatePosition);
       resizeObserver.observe(element);
       mutationObserver.observe(element, { attributes: true, childList: true, subtree: true });
 
       updatePosition();
 
       return () => {
+        window.removeEventListener('resize', updatePosition);
         resizeObserver.disconnect();
         mutationObserver.disconnect();
       };
