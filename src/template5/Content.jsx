@@ -7,9 +7,6 @@ import { Table } from "./Table";
 import {Styles} from "./Styles";
 import {TreeNode} from "./TreeNode";
 import { $elementsTree } from './store'
-import {Column} from "./Column.jsx";
-import {Tr} from "./Tr.jsx";
-import {Td} from "./Td.jsx";
 
 
 export const Content = () => {
@@ -23,16 +20,6 @@ export const Content = () => {
         <div style={{margin: '0px auto', maxWidth: width, fontSize: 0}} className="wrapper__table">
           <Table style={{maxWidth: 600}}>
             <TreeNode indexTree={tree} />
-            {/*<Tr>*/}
-            {/*  <Td>*/}
-            {/*    <Column size="1/2">*/}
-            {/*      <div style={{height: 60, backgroundColor: 'red'}}></div>*/}
-            {/*    </Column>*/}
-            {/*    <Column size="1/2">*/}
-            {/*      <div style={{height: 60, backgroundColor: 'blue'}}></div>*/}
-            {/*    </Column>*/}
-            {/*  </Td>*/}
-            {/*</Tr>*/}
           </Table>
         </div>
       </div>

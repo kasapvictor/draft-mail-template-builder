@@ -102,6 +102,18 @@ a[aria-current="page"] {
   height: 100%;
 }
 
+.setting-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 20px;
+  text-align: left;
+  background: #f2f2f2;
+  border-radius: 8px;
+}
+
 /*DELETE*/
 /*table, tbody, tr, td {*/
 /*  box-shadow: 0 0 1px #333333;*/

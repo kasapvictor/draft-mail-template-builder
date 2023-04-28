@@ -17,16 +17,12 @@ const columnSize = {
   '1/12': 12,
 }
 
-export const Column = ({ size='1/1', align = 'center', children, style}) => {
+export const Section = ({ size='1/1', align = 'center', children, style}) => {
   const columnCount = columnSize[size];
   const maxWidth = columnCount ? 600 / columnCount : '100%';
 
-  const handleClick = () => {
-    console.log('click')
-  }
-
   return (
-    <div onClick={handleClick} className={`column-1-${columnCount}`} style={{display: 'inline-block', maxWidth, verticalAlign: 'top', width: '100%', ...style}}>
+    <div className={`column-1-${columnCount}`} style={{display: 'inline-block', maxWidth, verticalAlign: 'top', width: '100%', ...style}}>
       <Table maxWidth={maxWidth}>
         <Tr>
           <Td align={align}>

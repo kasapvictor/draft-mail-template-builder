@@ -1,15 +1,273 @@
 import {IMG_SRC} from "../constants";
 
-export const data = [
+const blocks1 = [
   {
     id: 1,
-    component: 'tr',
-    order: 1,
     parent: null,
+    children: [2],
+    order: 1,
+    tag: 'tr',
+    props: {
+      style: {}
+    }
+  }, // 0
+  {
+    id: 2,
+    parent: 1,
+    children: [3],
+    order: 1,
+    tag: 'td',
+    props: {
+      width: '100%',
+      height: '100%',
+      align: 'center',
+      valign: 'top',
+      style: {
+        fontSize: 0,
+      }
+    },
+  }, // 1
+  {
+    id: 3,
+    parent: 2,
+    children: [4, 7],
+    rowIndex: 0,
+    order: 1,
+    type: 'row',
+    tag: 'div',
+    props: {
+      style: {
+        backgroundColor: '#bebebe'
+      }
+    },
+  }, // 2
+
+  {
+    id: 4,
+    parent: 3,
+    children: [5, 6],
+    order: 1,
+    component: 'section',
+    props: {
+      size: '1/3',
+      align: 'center',
+      style: {}
+    },
+  }, // 3
+  {
+    id: 5,
+    parent: 4,
+    parentIndex: 3,
+    rowIndex: 0,
+    children: null,
+    order: 1,
+    tag: 'h1',
+    content: 'Title',
+    type: 'text',
+    props: {
+      style: {
+        display: 'block',
+        margin: 0,
+        padding: 20,
+        fontSize: 20,
+        color: '#ffffff',
+        fontFamily: 'Helvetica, sans-serif, normal',
+        backgroundColor: '#5533c9',
+      },
+    }
+  }, // 4
+  {
+    id: 6,
+    parent: 4,
+    parentIndex: 3,
+    rowIndex: 0,
+    children: null,
+    order: 1,
+    tag: 'p',
+    content: 'text',
+    type: 'text',
+    props: {
+      style: {
+        display: 'block',
+        margin: 0,
+        padding: 20,
+        fontSize: 20,
+        color: '#ffffff',
+        fontFamily: 'Helvetica, sans-serif, normal',
+        backgroundColor: '#2f1b75',
+      },
+    }
+  }, // 5
+
+  {
+    id: 7,
+    parent: 3,
+    children: [8, 9],
+    order: 1,
+    component: 'section',
+    props: {
+      size: '1/3',
+      align: 'center',
+      style: {}
+    },
+  }, // 6
+  {
+    id: 8,
+    parent: 7,
+    parentIndex: 6,
+    rowIndex: 0,
+    children: null,
+    order: 1,
+    tag: 'h1',
+    content: 'Title',
+    type: 'text',
+    props: {
+      style: {
+        display: 'block',
+        margin: 0,
+        padding: 20,
+        fontSize: 20,
+        color: '#000000',
+        fontFamily: 'Helvetica, sans-serif, normal',
+        backgroundColor: '#eae313',
+      },
+    }
+  }, // 7
+  {
+    id: 9,
+    parent: 7,
+    parentIndex: 6,
+    rowIndex: 0,
+    children: null,
+    order: 1,
+    tag: 'p',
+    content: 'text',
+    type: 'text',
+    props: {
+      style: {
+        display: 'block',
+        margin: 0,
+        padding: 20,
+        fontSize: 20,
+        color: '#000000',
+        fontFamily: 'Helvetica, sans-serif, normal',
+        backgroundColor: '#b9b40e',
+      },
+    }
+  }, // 8
+];
+
+const blocks2 = [
+  {
+    id: 10,
+    parent: null,
+    children: [11],
+    order: 2,
+    tag: 'tr',
+    props: {
+      style: {}
+    }
+  }, // 9
+  {
+    id: 11,
+    parent: 10,
+    children: [12],
+    order: 1,
+    tag: 'td',
+    props: {
+      width: '100%',
+      height: '100%',
+      align: 'center',
+      valign: 'top',
+      style: {
+        fontSize: 0,
+      }
+    },
+  }, // 10
+  {
+    id: 12,
+    parent: 10,
+    children: [13],
+    rowIndex: 9,
+    order: 1,
+    type: 'row',
+    tag: 'div',
+    props: {
+      style: {
+        backgroundColor: '#838383'
+      }
+    },
+  }, // 11
+
+  {
+    id: 13,
+    parent: 12,
+    children: [14, 15],
+    order: 1,
+    component: 'section',
+    props: {
+      size: '1/3',
+      align: 'center',
+      style: {}
+    },
+  }, // 12
+  {
+    id: 14,
+    parent: 4,
+    parentIndex: 12,
+    rowIndex: 9,
+    children: null,
+    order: 1,
+    tag: 'h1',
+    content: 'Title',
+    type: 'text',
+    props: {
+      style: {
+        display: 'block',
+        margin: 0,
+        padding: 20,
+        fontSize: 20,
+        color: '#ffffff',
+        fontFamily: 'Helvetica, sans-serif, normal',
+        backgroundColor: '#ff4300',
+      },
+    }
+  }, // 13
+  {
+    id: 15,
+    parent: 13,
+    parentIndex: 12,
+    rowIndex: 9,
+    children: null,
+    order: 1,
+    tag: 'p',
+    content: 'text',
+    type: 'text',
+    props: {
+      style: {
+        display: 'block',
+        margin: 0,
+        padding: 20,
+        fontSize: 20,
+        color: '#ffffff',
+        fontFamily: 'Helvetica, sans-serif, normal',
+        backgroundColor: '#b12f00',
+      },
+    }
+  }, // 14
+]
+
+
+const header = [
+  {
+    id: 1,
+    parent: null,
+    children: [2],
+    order: 3,
+    component: 'tr',
     props: {
       style: {}
     },
-    children: [2],
   },
   {
     id: 2,
@@ -20,7 +278,9 @@ export const data = [
       width: '100%',
       height: '100%',
       valign: 'top',
-      style: {}
+      style: {
+        backgroundColor: '#000000'
+      }
     },
     children: [3],
   },
@@ -55,15 +315,18 @@ export const data = [
       },
     }
   },
+];
+
+const cta = [
   {
     id: 5,
-    component: 'tr',
-    order: 2,
     parent: null,
+    component: 'tr',
+    children: [6],
+    order: 4,
     props: {
       style: {}
     },
-    children: [6],
   },
   {
     id: 6,
@@ -110,15 +373,20 @@ export const data = [
       },
     },
   },
+];
+
+const content = [
   {
     id: 9,
-    component: 'tr',
-    order: 3,
     parent: null,
-    props: {
-      style: {}
-    },
     children: [10],
+    order: 5,
+    component: 'tr',
+    props: {
+      style: {
+        backgroundColor: '#47daff' // фон секции
+      }
+    },
   },
   {
     id: 10,
@@ -130,9 +398,6 @@ export const data = [
       height: '100%',
       align: 'center',
       valign: 'top',
-      style: {
-        backgroundColor: '#ffffff' // фон секции
-      }
     },
     children: [11, 13],
   },
@@ -144,7 +409,6 @@ export const data = [
     props: {
       size: '1/2',
       align: 'center',
-      style: {}
     },
     children: [24],
   },
@@ -160,9 +424,8 @@ export const data = [
         display: 'block',
         padding: '20px',
         fontSize: 16,
-        color: '#333333',
         fontFamily: 'Helvetica, sans-serif, normal',
-        backgroundColor: '#fefefe',
+        backgroundColor: '#ff6347'
       },
     },
   },
@@ -254,15 +517,18 @@ export const data = [
       },
     }
   },
+]
+
+const footer = [
   {
     id: 17,
-    component: 'tr',
-    order: 4,
     parent: null,
+    children: [18],
+    order: 6,
+    component: 'tr',
     props: {
       style: {}
     },
-    children: [18],
   },
   {
     id: 18,
@@ -304,7 +570,7 @@ export const data = [
         fontSize: 16,
         color: '#ffffff',
         fontFamily: 'Helvetica, sans-serif, normal',
-        backgroundColor: '#111111',
+        backgroundColor: '#676767',
       },
     },
   },
@@ -362,4 +628,14 @@ export const data = [
       },
     },
   },
+]
+
+export const data = [
+  ...blocks1,
+  ...blocks2,
+  // ...blocks3,
+  // ...header,
+  // ...cta,
+  // ...content,
+  // ...footer,
 ]
