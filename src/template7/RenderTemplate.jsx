@@ -134,8 +134,6 @@ const RenderElement = memo(({ elementId, children }) => {
   const refElement = useRef(null);
   const { isHovered, handleClick, handleMouseEnter, handleMouseLeave } = useElementHandlers({type, isSelected, isSpecialType})
 
-  console.log('content', content)
-
   const isEmptyContent = isContentEditable && !content.length;
   const emptyStyles = isEmptyContent
     ? {
@@ -179,6 +177,7 @@ const RenderElement = memo(({ elementId, children }) => {
             </>
         )
       }
+      {/* FIXME надо переделать реализацию лейбла потому что если удалить какой-то контент то все блоки под ним едут а лейбл остается в тоже позиции что и был*/}
       {/* FIXME надо подумать над альтернативным решением как выводить лейбл с типом в псевдоэлементе ::after */}
       {
         isSpecialType

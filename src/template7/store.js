@@ -18,12 +18,33 @@ export const { setElementId, resetElementId } = createApi($selectedElement,{
   },
 });
 
-export const {handleContent } = createApi($elements, {
+export const {handleContent, handleTextColor , handleBackgroundColor, handleFontSize} = createApi($elements, {
   handleContent: (state, payload) => {
     const {elementId, value} = payload;
 
     return produce(state, (draft) => {
       draft[elementId].content = value;
+    });
+  },
+  handleTextColor: (state, payload) => {
+    const {elementId, value} = payload;
+
+    return produce(state, (draft) => {
+      draft[elementId].props.style.color = value;
+    });
+  },
+  handleBackgroundColor: (state, payload) => {
+    const {elementId, value} = payload;
+
+    return produce(state, (draft) => {
+      draft[elementId].props.style.backgroundColor = value;
+    });
+  },
+  handleFontSize: (state, payload) => {
+    const {elementId, value} = payload;
+
+    return produce(state, (draft) => {
+      draft[elementId].props.style.fontSize = `${value}px`;
     });
   }
 });

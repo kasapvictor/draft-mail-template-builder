@@ -178,7 +178,7 @@ export const elements = {
     contentEditable: true,
     props: {
       style: {
-        fontSize: 16,
+        fontSize: 24,
       }
     }
   },

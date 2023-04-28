@@ -1,7 +1,8 @@
 import {memo} from "react";
 import {useStore, useStoreMap} from "effector-react";
 
-import {$elements, $selectedElement, handleContent} from "./store.js";
+import {$elements, $selectedElement, handleBackgroundColor, handleContent, handleFontSize, handleTextColor} from "./store.js";
+import {number} from "prop-types";
 
 const contentEditable = new Set([
   'title', 'text','link', 'button'
@@ -11,6 +12,7 @@ const settingsRowStyles = {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'start',
+  alignItems: 'flex-start',
   gap: 4
 }
 
@@ -22,28 +24,119 @@ const useSelectedElement = (selectedElementId) => {
   });
 };
 
+// PADDING
+const Padding = memo(({element}) => {
+  if (!element) {
+    return null;
+  }
+
+  const fontSize = element.props?.style.fontSize || '16px';
+  const fontSizeFormatted =  typeof fontSize === 'string' ? fontSize.replace('px', '') : fontSize;
+
+  return (
+    <div style={settingsRowStyles}>
+      <label htmlFor={`${element.id}-font-size`} style={{textTransform: 'capitalize'}}>Font Size:</label>
+      <input
+        type="number"
+        value={fontSizeFormatted}
+        id={`${element.id}-font-size`}
+        onChange={(e) => handleFontSize({
+          elementId: element.id,
+          value: e.target.value,
+        })}/>
+    </div>
+  )
+});
+
+// FONT SIZE
+const FontSize = memo(({element}) => {
+  if (!element || !contentEditable.has(element.type)) {
+    return null;
+  }
+
+  const fontSize = element.props?.style.fontSize || '16px';
+  const fontSizeFormatted =  typeof fontSize === 'string' ? fontSize.replace('px', '') : fontSize;
+
+  return (
+    <div style={settingsRowStyles}>
+      <label htmlFor={`${element.id}-font-size`} style={{textTransform: 'capitalize'}}>Font Size:</label>
+      <input
+        type="number"
+        value={fontSizeFormatted}
+        id={`${element.id}-font-size`}
+        onChange={(e) => handleFontSize({
+          elementId: element.id,
+          value: e.target.value,
+        })}/>
+    </div>
+  )
+});
+
+// BACKGROUND COLOR
+const BackgroundColor = memo(({element}) => {
+  if (!element) {
+    return null;
+  }
+
+  const color = element.props?.style.backgroundColor || ''; // transparent
+
+  return (
+    <div style={settingsRowStyles}>
+      <label htmlFor={`${element.id}-background-color`} style={{textTransform: 'capitalize'}}>Background Color:</label>
+      <input
+        type="color"
+        value={color}
+        id={`${element.id}-background-color`}
+        onChange={(e) => handleBackgroundColor({
+          elementId: element.id,
+          value: e.target.value,
+        })}/>
+
+      <button onClick={(e) => handleBackgroundColor({
+        elementId: element.id,
+        value: '', // transparent
+      })}>Clear background</button>
+
+    </div>
+  )
+});
+
+// TEXT COLOR
+const TextColor = memo(({element}) => {
+  if (!element || !contentEditable.has(element.type)) {
+    return null;
+  }
+
+  const color = element.props?.style.color || '#333333';
+
+  return (
+    <div style={settingsRowStyles}>
+      <label htmlFor={`${element.id}-color`} style={{textTransform: 'capitalize'}}>Text Color:</label>
+      <input
+        type="color"
+        value={color}
+        id={`${element.id}-color`}
+        onChange={(e) => handleTextColor({
+          elementId: element.id,
+          value: e.target.value,
+        })}/>
+    </div>
+  )
+});
+
+// CONTENT
 const Content = memo(({element}) => {
   if (!element || !contentEditable.has(element.type)) {
     return null;
   }
 
-  const handleBlur = () => {
-    if (!element.content.length) {
-      // handleContent({
-      //   elementId: element.id,
-      //   value: 'Default value',
-      // })
-    }
-  }
-
   return (
     <div style={settingsRowStyles}>
-      <label htmlFor={`${element.id}-${element.type}`} style={{textTransform: 'capitalize'}}>{element.type}:</label>
+      <label htmlFor={`${element.id}-content`} style={{textTransform: 'capitalize'}}>Content:</label>
       <input
         type="text"
         value={element.content}
-        onBlur={handleBlur}
-        id={`${element.id}-${element.type}`}
+        id={`${element.id}-content`}
         onChange={(e) => handleContent({
           elementId: element.id,
           value: e.target.value,
@@ -60,9 +153,14 @@ export const SettingsPanel = () => {
 
   return (
     <div className="setting-panel">
-      <h3>Settings:</h3>
+      <h3 style={{padding: 0, margin: 0, textTransform: 'capitalize'}}>
+        Settings {element ? `:: ${element.type}` : null}
+      </h3>
 
-      <Content element={element}/>
+      <Content element={element} />
+      <FontSize element={element}/>
+      <TextColor element={element} />
+      <BackgroundColor element={element} />
     </div>
   )
 }

@@ -107,6 +107,7 @@ a[aria-current="page"] {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  gap: 15px;
   padding: 20px;
   text-align: left;
   background: #f2f2f2;
