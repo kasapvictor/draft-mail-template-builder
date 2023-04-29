@@ -69,7 +69,6 @@ const useElementHandlers = ({type, isSelected, isSpecialType}) => {
   const handleMouseEnter = useCallback((event) => {
     if (!isSelected && !isSpecialType) {
       event.stopPropagation();
-      // console.log(event.target.getBoundingClientRect());
       hoveredElementRef(event.currentTarget)
       setIsHovered(true);
     }
