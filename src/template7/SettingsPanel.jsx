@@ -2,11 +2,9 @@ import {memo, useEffect} from "react";
 import {useStore, useStoreMap} from "effector-react";
 
 import {
-  $canvasActive,
   $elements,
   $selectedElement,
   handleBackgroundColor,
-  handleContainerWidth,
   handleContent,
   handleFontSize,
   handlePadding,
