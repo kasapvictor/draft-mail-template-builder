@@ -2,15 +2,19 @@ import {memo, useEffect} from "react";
 import {useStore, useStoreMap} from "effector-react";
 
 import {
+  $canvasActive,
   $elements,
   $selectedElement,
   handleBackgroundColor,
+  handleContainerWidth,
   handleContent,
   handleFontSize,
   handlePadding,
   handleTextColor
 } from "./store.js";
-import {number} from "prop-types";
+
+import {$width, widthChanged} from "../models/model-width.js";
+import {WIDTH} from "../constants.js";
 
 const contentEditable = new Set([
   'title', 'text','link', 'button'
@@ -48,18 +52,18 @@ const Padding = memo(({element}) => {
   return (
     <>
       <div style={settingsRowStyles}>
-      <label htmlFor={`${element.id}-padding-top`} style={{textTransform: 'capitalize'}}>Padding Top:</label>
-      <input
-        min={0}
-        type="number"
-        value={paddingTop.replace('px', '')}
-        id={`${element.id}-padding-top`}
-        onChange={(e) => handlePadding({
-          elementId: element.id,
-          value: e.target.value,
-          side: 'paddingTop',
-        })}/>
-    </div>
+        <label htmlFor={`${element.id}-padding-top`} style={{textTransform: 'capitalize'}}>Padding Top:</label>
+        <input
+          min={0}
+          type="number"
+          value={paddingTop.replace('px', '')}
+          id={`${element.id}-padding-top`}
+          onChange={(e) => handlePadding({
+            elementId: element.id,
+            value: e.target.value,
+            side: 'paddingTop',
+          })}/>
+      </div>
       <div style={settingsRowStyles}>
         <label htmlFor={`${element.id}-padding-right`} style={{textTransform: 'capitalize'}}>Padding Right:</label>
         <input
@@ -200,6 +204,61 @@ const Content = memo(({element}) => {
   )
 })
 
+const Width = () => {
+  const width = useStore($width);
+
+  return (
+    <div>
+      <h4 style={{lineHeight: 2, margin: 0}}>Width: {width}</h4>
+      <div style={{display: 'flex', gap: 10}}>
+        <button onClick={() => {
+          widthChanged(WIDTH.LG)
+          handleContainerWidth(WIDTH.LG)
+        }}>
+          {width === WIDTH.LG ? <strong>{WIDTH.LG}</strong> : WIDTH.LG}
+        </button>
+        <button onClick={() => {
+          widthChanged(WIDTH.SM);
+          handleContainerWidth(WIDTH.SM);
+        }}>
+          {width === WIDTH.SM ? <strong>{WIDTH.SM}</strong> : WIDTH.SM}
+        </button>
+      </div>
+    </div>
+  )
+}
+
+const CanvasSettings = memo(() => {
+  const isSelectedCanvas = useStore($canvasActive);
+
+  const elements = useStore($elements);
+  const canvas = elements.canvas;
+
+  return !isSelectedCanvas ? null : (
+    <div>
+      <h4>Canvas settings</h4>
+
+      <div style={settingsRowStyles}>
+        <label htmlFor={`${canvas.id}-background-color`} style={{textTransform: 'capitalize'}}>Background Color:</label>
+        <input
+          type="color"
+          value={canvas.props.style.backgroundColor}
+          id={`${canvas.id}-background-color`}
+          onChange={(e) => handleBackgroundColor({
+            elementId: canvas.id,
+            value: e.target.value,
+          })}/>
+
+        <button onClick={(e) => handleBackgroundColor({
+          elementId: canvas.id,
+          value: '', // transparent
+        })}>Clear background</button>
+
+      </div>
+    </div>
+  )
+})
+
 export const SettingsPanel = () => {
   const selectedElementId = useStore($selectedElement);
   const element = useSelectedElement(selectedElementId);
@@ -212,6 +271,8 @@ export const SettingsPanel = () => {
         Settings {element ? `:: ${element.type}` : null}
       </h3>
 
+      <Width/>
+      <CanvasSettings/>
       <Content element={element} />
       <FontSize element={element}/>
       <TextColor element={element} />
@@ -223,7 +284,7 @@ export const SettingsPanel = () => {
 
 
 // TODO
-//  1) переключение экранов с 600 на 300
+//  + 1) переключение экранов с 600 на 300
 //  2) добавить смену позиции секций
 //  3) создать структуру реального шаблона
 //  4) сделать выгрузку в шаблона в html для тестов

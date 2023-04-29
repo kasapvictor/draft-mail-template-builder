@@ -18,7 +18,12 @@ export const { setElementId, resetElementId } = createApi($selectedElement,{
   },
 });
 
-export const {handleContent, handleTextColor , handleBackgroundColor, handleFontSize, handlePadding} = createApi($elements, {
+export const {handleContainerWidth, handleContent, handleTextColor , handleBackgroundColor, handleFontSize, handlePadding} = createApi($elements, {
+  handleContainerWidth: (state, payload) => {
+    return produce(state, (draft) => {
+      draft.container.props.style.maxWidth = payload; // FIXME сбросить размер (600) при сохранении/выгрузке в html
+    });
+  },
   handleContent: (state, payload) => {
     const {elementId, value} = payload;
 
@@ -59,19 +64,32 @@ export const {handleContent, handleTextColor , handleBackgroundColor, handleFont
 
 $selectedElement.watch((id) => {
   console.log('SELECTED ELEMENT ID::', id);
-})
+});
 
+// CANVAS COMMON SETTINGS
+export const $canvasActive = createStore(false);
+export const selectedCanvas = createEvent('selected-canvas');
+
+$canvasActive.on(selectedCanvas, (state, value) => {
+  if (state === value) {
+    return state;
+  }
+
+  console.log('->', value)
+
+  return value;
+});
 
 // TO SHOW LABEL
 export const $hoveredElementRef = createStore(null);
 export const $selectedElementRef = createStore(null);
-export const selectElementRef = createEvent('select-element');
-export const hoverElementRef = createEvent('hover-element');
+export const selectedElementRef = createEvent('select-element');
+export const hoveredElementRef = createEvent('hover-element');
 
-$selectedElementRef.on(selectElementRef, (_, element) => {
+$selectedElementRef.on(selectedElementRef, (_, element) => {
   return element
 });
 
-$hoveredElementRef.on(hoverElementRef, (_, element) => {
+$hoveredElementRef.on(hoveredElementRef, (_, element) => {
   return element
 });

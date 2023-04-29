@@ -5,12 +5,13 @@ import {
   $selectedElement,
   $selectedElementRef,
   $tree,
-  hoverElementRef,
-  resetElementId, selectElementRef,
+  hoveredElementRef,
+  resetElementId, selectedCanvas, selectedElementRef,
   setElementId
 } from "./store.js";
 import {createElement, memo, useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {createPortal} from "react-dom";
+import {$width} from "../models/model-width.js";
 
 const selfCloseElements = new Set([
   "area",
@@ -54,11 +55,13 @@ const useElementHandlers = ({type, isSelected, isSpecialType}) => {
     event.preventDefault();
 
     if (type === 'canvas') {
-      resetElementId()
+      resetElementId();
+      selectedCanvas(true);
     }
 
     if (!isSelected && !isSpecialType) {
-      selectElementRef(event.currentTarget)
+      selectedCanvas(false);
+      selectedElementRef(event.currentTarget)
       setElementId({id: event.currentTarget.id});
     }
   }, [type, isSelected, isSpecialType]);
@@ -67,7 +70,7 @@ const useElementHandlers = ({type, isSelected, isSpecialType}) => {
     if (!isSelected && !isSpecialType) {
       event.stopPropagation();
       // console.log(event.target.getBoundingClientRect());
-      hoverElementRef(event.currentTarget)
+      hoveredElementRef(event.currentTarget)
       setIsHovered(true);
     }
   }, [isSelected, isSpecialType]);
@@ -75,7 +78,7 @@ const useElementHandlers = ({type, isSelected, isSpecialType}) => {
   const handleMouseLeave = useCallback((event) => {
     if (!isSpecialType) {
       event.stopPropagation();
-      hoverElementRef(null);
+      hoveredElementRef(null);
       setIsHovered(false);
     }
   }, [isSpecialType]);
@@ -107,6 +110,7 @@ const RenderElement = memo(({ elementId, children }) => {
   const isFontSizeZero = isContentEditable && props?.style?.fontSize === '0px';
   const emptyStyles = isEmptyContent || isFontSizeZero
     ? {
+      minWidth: '20px',
       minHeight: '20px',
       outlineWidth: `1px ${mainColor} dashed`,
     }
@@ -187,6 +191,7 @@ const labelStyle = {
 
 const useLabelElementPosition = (element) => {
   const [position, setPosition] = useState(null);
+  const width = useStore($width);
 
   useEffect(() => {
     if (element) {
@@ -221,16 +226,17 @@ const useLabelElementPosition = (element) => {
     } else {
       setPosition(null);
     }
-  }, [element]);
+  }, [element, width]);
 
   return position;
 }
 
 const ElementLabelSelected = () => {
   const target = useStore($selectedElementRef);
+  const isSelectedElement = useStore($selectedElement);
   const position = useLabelElementPosition(target);
 
-  return target && createPortal(
+  return target && isSelectedElement && createPortal(
     <div style={{ ...labelStyle, ...position }}>{target.dataset.type}</div>,
     document.body
   );
