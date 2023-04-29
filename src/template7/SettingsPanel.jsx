@@ -5,7 +5,8 @@ import {
   $elements,
   $selectedElement,
   handleBackgroundColor,
-  handleContent, handleContentWidth,
+  handleContainerWidth,
+  handleContent,
   handleFontSize,
   handlePadding,
   handleTextColor
@@ -211,13 +212,13 @@ const Width = () => {
       <div style={{display: 'flex', gap: 10}}>
         <button onClick={() => {
           widthChanged(WIDTH.LG)
-          handleContentWidth(WIDTH.LG)
+          handleContainerWidth(WIDTH.LG)
         }}>
           {width === WIDTH.LG ? <strong>{WIDTH.LG}</strong> : WIDTH.LG}
         </button>
         <button onClick={() => {
           widthChanged(WIDTH.SM);
-          handleContentWidth(WIDTH.SM);
+          handleContainerWidth(WIDTH.SM);
         }}>
           {width === WIDTH.SM ? <strong>{WIDTH.SM}</strong> : WIDTH.SM}
         </button>
