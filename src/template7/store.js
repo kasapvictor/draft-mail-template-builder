@@ -49,7 +49,7 @@ export const {handleContainerWidth, handleContent, handleTextColor , handleBackg
     const {elementId, value} = payload;
 
     return produce(state, (draft) => {
-      draft[elementId].props.style.fontSize = `${value}px`;
+      draft[elementId].props.style.fontSize = `${!value ? 0 :value}px`;
     });
   },
   handlePadding: (state, payload) => {
@@ -64,20 +64,6 @@ export const {handleContainerWidth, handleContent, handleTextColor , handleBackg
 
 $selectedElement.watch((id) => {
   console.log('SELECTED ELEMENT ID::', id);
-});
-
-// CANVAS COMMON SETTINGS
-export const $canvasActive = createStore(false);
-export const selectedCanvas = createEvent('selected-canvas');
-
-$canvasActive.on(selectedCanvas, (state, value) => {
-  if (state === value) {
-    return state;
-  }
-
-  console.log('->', value)
-
-  return value;
 });
 
 // TO SHOW LABEL

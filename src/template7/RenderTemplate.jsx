@@ -6,7 +6,7 @@ import {
   $selectedElementRef,
   $tree,
   hoveredElementRef,
-  resetElementId, selectedCanvas, selectedElementRef,
+  resetElementId, selectedElementRef,
   setElementId
 } from "./store.js";
 import {createElement, memo, useCallback, useEffect, useMemo, useRef, useState} from "react";
@@ -56,12 +56,14 @@ const useElementHandlers = ({type, isSelected, isSpecialType}) => {
 
     if (type === 'canvas') {
       resetElementId();
-      selectedCanvas(true);
+      // selectedCanvas(true);
+      selectedElementRef(event.currentTarget);
+      setElementId({id: event.currentTarget.id});
     }
 
     if (!isSelected && !isSpecialType) {
-      selectedCanvas(false);
-      selectedElementRef(event.currentTarget)
+      // selectedCanvas(false);
+      selectedElementRef(event.currentTarget);
       setElementId({id: event.currentTarget.id});
     }
   }, [type, isSelected, isSpecialType]);

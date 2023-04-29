@@ -2,7 +2,6 @@ import {memo, useEffect} from "react";
 import {useStore, useStoreMap} from "effector-react";
 
 import {
-  $canvasActive,
   $elements,
   $selectedElement,
   handleBackgroundColor,
@@ -120,6 +119,7 @@ const FontSize = memo(({element}) => {
     <div style={settingsRowStyles}>
       <label htmlFor={`${element.id}-font-size`} style={{textTransform: 'capitalize'}}>Font Size:</label>
       <input
+        min={0}
         type="number"
         value={fontSizeFormatted}
         id={`${element.id}-font-size`}
@@ -228,37 +228,6 @@ const Width = () => {
   )
 }
 
-const CanvasSettings = memo(() => {
-  const isSelectedCanvas = useStore($canvasActive);
-
-  const elements = useStore($elements);
-  const canvas = elements.canvas;
-
-  return !isSelectedCanvas ? null : (
-    <div>
-      <h4>Canvas settings</h4>
-
-      <div style={settingsRowStyles}>
-        <label htmlFor={`${canvas.id}-background-color`} style={{textTransform: 'capitalize'}}>Background Color:</label>
-        <input
-          type="color"
-          value={canvas.props.style.backgroundColor}
-          id={`${canvas.id}-background-color`}
-          onChange={(e) => handleBackgroundColor({
-            elementId: canvas.id,
-            value: e.target.value,
-          })}/>
-
-        <button onClick={(e) => handleBackgroundColor({
-          elementId: canvas.id,
-          value: '', // transparent
-        })}>Clear background</button>
-
-      </div>
-    </div>
-  )
-})
-
 export const SettingsPanel = () => {
   const selectedElementId = useStore($selectedElement);
   const element = useSelectedElement(selectedElementId);
@@ -272,7 +241,6 @@ export const SettingsPanel = () => {
       </h3>
 
       <Width/>
-      <CanvasSettings/>
       <Content element={element} />
       <FontSize element={element}/>
       <TextColor element={element} />
@@ -288,4 +256,4 @@ export const SettingsPanel = () => {
 //  2) добавить смену позиции секций
 //  3) создать структуру реального шаблона
 //  4) сделать выгрузку в шаблона в html для тестов
-//  5) при клике на canvas должны открываться настройки всего шаблона
+//  + 5) при клике на canvas должны открываться настройки всего шаблона
