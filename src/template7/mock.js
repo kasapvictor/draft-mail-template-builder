@@ -260,6 +260,7 @@ export const elements = {
       href:"#",
       target: "_blank",
       style: {
+        display: 'inline-block',
         fontSize: 16,
         color: '#3bff00'
       }

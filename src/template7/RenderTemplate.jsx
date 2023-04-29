@@ -11,6 +11,7 @@ import {
 } from "./store.js";
 import {createElement, memo, useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {createPortal} from "react-dom";
+import {$width} from "../models/model-width.js";
 
 const selfCloseElements = new Set([
   "area",
@@ -107,6 +108,7 @@ const RenderElement = memo(({ elementId, children }) => {
   const isFontSizeZero = isContentEditable && props?.style?.fontSize === '0px';
   const emptyStyles = isEmptyContent || isFontSizeZero
     ? {
+      minWidth: '20px',
       minHeight: '20px',
       outlineWidth: `1px ${mainColor} dashed`,
     }
@@ -187,6 +189,7 @@ const labelStyle = {
 
 const useLabelElementPosition = (element) => {
   const [position, setPosition] = useState(null);
+  const width = useStore($width);
 
   useEffect(() => {
     if (element) {
@@ -221,7 +224,7 @@ const useLabelElementPosition = (element) => {
     } else {
       setPosition(null);
     }
-  }, [element]);
+  }, [element, width]);
 
   return position;
 }

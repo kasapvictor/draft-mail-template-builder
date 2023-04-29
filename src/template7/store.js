@@ -21,7 +21,7 @@ export const { setElementId, resetElementId } = createApi($selectedElement,{
 export const {handleContentWidth, handleContent, handleTextColor , handleBackgroundColor, handleFontSize, handlePadding} = createApi($elements, {
   handleContentWidth: (state, payload) => {
     return produce(state, (draft) => {
-      draft.container.props.style.maxWidth = payload;
+      draft.container.props.style.maxWidth = payload; // FIXME сбросить размер (600) при сохранении/выгрузке в html
     });
   },
   handleContent: (state, payload) => {
