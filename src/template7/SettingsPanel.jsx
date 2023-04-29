@@ -5,12 +5,14 @@ import {
   $elements,
   $selectedElement,
   handleBackgroundColor,
-  handleContent,
+  handleContent, handleContentWidth,
   handleFontSize,
   handlePadding,
   handleTextColor
 } from "./store.js";
-import {number} from "prop-types";
+
+import {$width, widthChanged} from "../models/model-width.js";
+import {WIDTH} from "../constants.js";
 
 const contentEditable = new Set([
   'title', 'text','link', 'button'
@@ -200,6 +202,30 @@ const Content = memo(({element}) => {
   )
 })
 
+const Width = () => {
+  const width = useStore($width);
+
+  return (
+    <div>
+      <h4 style={{lineHeight: 2, margin: 0}}>Width: {width}</h4>
+      <div style={{display: 'flex', gap: 10}}>
+        <button onClick={() => {
+          widthChanged(WIDTH.LG)
+          handleContentWidth(WIDTH.LG)
+        }}>
+          {width === WIDTH.LG ? <strong>{WIDTH.LG}</strong> : WIDTH.LG}
+        </button>
+        <button onClick={() => {
+          widthChanged(WIDTH.SM);
+          handleContentWidth(WIDTH.SM);
+        }}>
+          {width === WIDTH.SM ? <strong>{WIDTH.SM}</strong> : WIDTH.SM}
+        </button>
+      </div>
+    </div>
+  )
+}
+
 export const SettingsPanel = () => {
   const selectedElementId = useStore($selectedElement);
   const element = useSelectedElement(selectedElementId);
@@ -212,6 +238,7 @@ export const SettingsPanel = () => {
         Settings {element ? `:: ${element.type}` : null}
       </h3>
 
+      <Width/>
       <Content element={element} />
       <FontSize element={element}/>
       <TextColor element={element} />

@@ -18,7 +18,12 @@ export const { setElementId, resetElementId } = createApi($selectedElement,{
   },
 });
 
-export const {handleContent, handleTextColor , handleBackgroundColor, handleFontSize, handlePadding} = createApi($elements, {
+export const {handleContentWidth, handleContent, handleTextColor , handleBackgroundColor, handleFontSize, handlePadding} = createApi($elements, {
+  handleContentWidth: (state, payload) => {
+    return produce(state, (draft) => {
+      draft.container.props.style.maxWidth = payload;
+    });
+  },
   handleContent: (state, payload) => {
     const {elementId, value} = payload;
 
