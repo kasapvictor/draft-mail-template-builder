@@ -66,6 +66,14 @@ $selectedElement.watch((id) => {
   console.log('SELECTED ELEMENT ID::', id);
 });
 
+// ROWS ORDER
+export const updatedTree = createEvent('update tree');
+
+$tree.on(updatedTree, (state, payload) => {
+  console.log('payload', payload)
+});
+
+
 // TO SHOW LABEL
 export const $hoveredElementRef = createStore(null);
 export const $selectedElementRef = createStore(null);

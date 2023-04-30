@@ -16,7 +16,8 @@ export const tree = {
                   id: 'tbody',
                   children: [
                     {
-                      id: 'tr1',
+                      id: 'row1',
+                      name: 'header',
                       children: [
                         {
                           id: 'td1',
@@ -38,7 +39,8 @@ export const tree = {
                       ]
                     },
                     {
-                      id: 'tr2',
+                      id: 'row2',
+                      name: 'cta',
                       children: [
                         {
                           id: 'td2',
@@ -126,10 +128,10 @@ export const elements = {
       style: {},
     },
   },
-  tr1: {
-    id: 'tr1',
+  row1: {
+    id: 'row1',
     tag: 'tr',
-    type: 'row', // TODO добавить отдельный див с типом row
+    type: 'row',
     props: {
       style: {},
     },
@@ -193,8 +195,8 @@ export const elements = {
       }
     }
   },
-  tr2: {
-    id: 'tr2',
+  row2: {
+    id: 'row2',
     tag: 'tr',
     type: 'row',
     props: {

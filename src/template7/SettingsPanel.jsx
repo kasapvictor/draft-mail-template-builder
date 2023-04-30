@@ -1,19 +1,22 @@
-import {memo, useEffect} from "react";
+import {memo} from "react";
 import {useStore, useStoreMap} from "effector-react";
+import { useListState } from '@mantine/hooks';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import {
   $elements,
-  $selectedElement,
+  $selectedElement, $tree,
   handleBackgroundColor,
   handleContainerWidth,
   handleContent,
   handleFontSize,
   handlePadding,
-  handleTextColor
+  handleTextColor, updatedTree
 } from "./store.js";
 
 import {$width, widthChanged} from "../models/model-width.js";
 import {WIDTH} from "../constants.js";
+import {StrictModeDroppable} from "./StrictModeDroppable.jsx";
 
 const contentEditable = new Set([
   'title', 'text','link', 'button'
@@ -204,6 +207,66 @@ const Content = memo(({element}) => {
   )
 })
 
+const getRows = (tree) => {
+  return tree.children.reduce((rows, node) => {
+    if (node.id.startsWith('row')) {
+      rows.push(node);
+    }
+
+    if (node.children) {
+      rows = rows.concat(getRows(node));
+    }
+
+    return rows;
+  }, []);
+}
+
+const Rows = () => {
+  const tree = useStore($tree);
+  const rows = getRows(tree);
+
+  const rowsDraggable = getRows(tree).map((row, index) => {
+    return (
+      <Draggable key={row.id} index={index} draggableId={row.id}>
+        {(provided, snapshot) => (
+          <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className="draggable-item">
+            {row.name}
+          </div>
+        )}
+      </Draggable>
+    )
+  });
+
+  console.log('Rows', rows);
+
+  const handleOnDragEnd = ({destination, source}) => {
+    const rowSourceId = rows[source.index].id;
+    const rowDestinationId = rows[destination?.index || 0].id;
+
+    console.log({destination, source})
+    console.log({rowSourceId, rowDestinationId})
+
+    updatedTree({ from: rowSourceId, to: rowDestinationId });
+  }
+
+  return (
+    <div style={{ width: '100%' }}>
+      <h4 style={{lineHeight: 2, margin: 0}}>Rows</h4>
+
+      <DragDropContext onDragEnd={handleOnDragEnd}>
+        <StrictModeDroppable droppableId="dnd-list" direction="vertical">
+          {(provided) => (
+            <div {...provided.droppableProps} ref={provided.innerRef}>
+              {rowsDraggable}
+              {provided.placeholder}
+            </div>
+          )}
+        </StrictModeDroppable>
+      </DragDropContext>
+    </div>
+  )
+};
+
 const Width = () => {
   const width = useStore($width);
 
@@ -241,6 +304,7 @@ export const SettingsPanel = () => {
       </h3>
 
       <Width/>
+      <Rows/>
       <Content element={element} />
       <FontSize element={element}/>
       <TextColor element={element} />
