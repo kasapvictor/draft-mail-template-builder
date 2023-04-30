@@ -240,13 +240,13 @@ const Rows = () => {
   console.log('Rows', rows);
 
   const handleOnDragEnd = ({destination, source}) => {
-    const rowSourceId = rows[source.index].id;
-    const rowDestinationId = rows[destination?.index || 0].id;
+    const rowSource = rows[source.index];
+    const rowDestination = rows[destination?.index || 0];
 
     console.log({destination, source})
-    console.log({rowSourceId, rowDestinationId})
+    console.log({rowSource, rowDestination})
 
-    updatedTree({ from: rowSourceId, to: rowDestinationId });
+    updatedTree({ source: rowSource, destination: rowDestination });
   }
 
   return (
@@ -304,7 +304,7 @@ export const SettingsPanel = () => {
       </h3>
 
       <Width/>
-      <Rows/>
+      {/*<Rows/>*/}
       <Content element={element} />
       <FontSize element={element}/>
       <TextColor element={element} />

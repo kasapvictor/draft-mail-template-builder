@@ -70,7 +70,35 @@ $selectedElement.watch((id) => {
 export const updatedTree = createEvent('update tree');
 
 $tree.on(updatedTree, (state, payload) => {
-  console.log('payload', payload)
+  console.log(state);
+  console.log('payload', payload); // rowSource, rowDestination
+
+  const { source, destination } = payload;
+
+  const getNewTree = (tree) => {
+    let clonedNode = { ...tree };
+
+    if (tree.children) {
+      if (clonedNode.id === source.id) {
+        console.log('source', clonedNode, source);
+        // clonedNode = destination;
+        destination.children = tree.children.map((child) => getNewTree(child))
+      }
+
+      if (clonedNode.id === destination.id) {
+        console.log('destination', clonedNode, destination);
+        source.children = tree.children.map((child) => getNewTree(child))
+        // clonedNode = source;
+      }
+
+      // clonedNode.children = tree.children.map((child) => getNewTree(child));
+    }
+
+    return clonedNode;
+  }
+
+
+  console.log('newTree', getNewTree(state));
 });
 
 
