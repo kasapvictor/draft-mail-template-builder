@@ -1,81 +1,103 @@
 import {IMG_SRC} from "../constants";
 
+// export const tree = {
+//   id: 'root',
+//   children: [
+//     {
+//       id: 'canvas',
+//       children: [
+//         {
+//           id: 'container',
+//           children: [
+//             {
+//               id: 'table',
+//               children: [
+//                 {
+//                   id: 'tbody',
+//                   children: [
+//                     {
+//                       id: 'row1',
+//                       name: 'header',
+//                       children: [
+//                         {
+//                           id: 'td1',
+//                           children: [
+//                             {
+//                               id: 'section1',
+//                               children: [
+//                                 {
+//                                   id: 'block1',
+//                                   children: [
+//                                   { id: 'title1' },
+//                                   { id: 'subtitle1' }
+//                                 ]
+//                                 }
+//                               ]
+//                             }
+//                           ]
+//                         }
+//                       ]
+//                     },
+//                     {
+//                       id: 'row2',
+//                       name: 'cta',
+//                       children: [
+//                         {
+//                           id: 'td2',
+//                           children: [
+//                             {
+//                               id: 'section2',
+//                               children: [
+//                                 {
+//                                   id: 'block2',
+//                                   children: [
+//                                     { id: 'text1' },
+//                                     { id: 'link1' }
+//                                   ]
+//                                 },
+//                                 {
+//                                   id: 'block3',
+//                                   children: [
+//                                     { id: 'img1' }
+//                                   ]
+//                                 }
+//                               ]
+//                             }
+//                           ]
+//                         }
+//                       ]
+//                     }
+//                   ]
+//                 }
+//               ]
+//             }
+//           ]
+//         }
+//       ]
+//     }
+//   ]
+// }
+
 export const tree = {
-  id: 'root',
-  children: [
-    {
-      id: 'canvas',
-      children: [
-        {
-          id: 'container',
-          children: [
-            {
-              id: 'table',
-              children: [
-                {
-                  id: 'tbody',
-                  children: [
-                    {
-                      id: 'row1',
-                      name: 'header',
-                      children: [
-                        {
-                          id: 'td1',
-                          children: [
-                            {
-                              id: 'section1',
-                              children: [
-                                {
-                                  id: 'block1',
-                                  children: [
-                                  { id: 'title1' },
-                                  { id: 'subtitle1' }
-                                ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      id: 'row2',
-                      name: 'cta',
-                      children: [
-                        {
-                          id: 'td2',
-                          children: [
-                            {
-                              id: 'section2',
-                              children: [
-                                {
-                                  id: 'block2',
-                                  children: [
-                                    { id: 'text1' },
-                                    { id: 'link1' }
-                                  ]
-                                },
-                                {
-                                  id: 'block3',
-                                  children: [
-                                    { id: 'img1' }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  root: { id: 'root', parent: null, children: ['canvas'] },
+  canvas: { id: 'canvas', parent: 'root', children: ['container'] },
+  container: { id: 'container', parent: 'canvas', children: ['table'] },
+  table: { id: 'table', parent: 'container', children: ['tbody'] },
+  tbody: { id: 'tbody', parent: 'table', children: ['row1', 'row2'] },
+  row1: { id: 'row1', parent: 'tbody', name: 'header', children: ['td1'] },
+  row2: { id: 'row2', parent: 'tbody', name: 'cta', children: ['td2'] },
+  td1: { id: 'td1', parent: 'td1', children: ['section1'] },
+  td2: { id: 'td2', parent: 'row2', children: ['section2'] },
+  section1: { id: 'section1', parent: 'td1',  children: ['block1'] },
+  section2: { id: 'section2', parent: 'td2', children: ['block2', 'block3'] },
+  block1: { id: 'block1', parent: 'section1', children: ['title1', 'subtitle1'] },
+  block2: { id: 'block2', parent: 'section2', children: ['text1', 'link1'] },
+  block3: { id: 'block3', parent: 'section2', children: ['img1'] },
+  title1: { id: 'title1', parent: 'block1', },
+  subtitle1: { id: 'subtitle1', parent: 'block1', },
+  text1: { id: 'text1', parent: 'block2', },
+  link1: { id: 'link1', parent: 'block2', },
+  img1: { id: 'img1', parent: 'block3', }
 }
 
 export const elements = {

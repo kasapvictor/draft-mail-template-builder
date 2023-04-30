@@ -70,35 +70,23 @@ $selectedElement.watch((id) => {
 export const updatedTree = createEvent('update tree');
 
 $tree.on(updatedTree, (state, payload) => {
-  console.log(state);
-  console.log('payload', payload); // rowSource, rowDestination
-
   const { source, destination } = payload;
 
-  const getNewTree = (tree) => {
-    let clonedNode = { ...tree };
+  const sourceParent = state[state[source.id].parent];
+  const destinationParent = state[state[destination.id].parent];
 
-    if (tree.children) {
-      if (clonedNode.id === source.id) {
-        console.log('source', clonedNode, source);
-        // clonedNode = destination;
-        destination.children = tree.children.map((child) => getNewTree(child))
-      }
+  const sourceIndex = sourceParent.children.findIndex(childId => childId === source.id);
+  const destinationIndex = destinationParent.children.findIndex(childId => childId === destination.id);
 
-      if (clonedNode.id === destination.id) {
-        console.log('destination', clonedNode, destination);
-        source.children = tree.children.map((child) => getNewTree(child))
-        // clonedNode = source;
-      }
+  const newTree = { ...state };
 
-      // clonedNode.children = tree.children.map((child) => getNewTree(child));
-    }
+  const newSourceParent = newTree[source.parent];
+  const newDestinationParent = newTree[destination.parent];
 
-    return clonedNode;
-  }
+  [newSourceParent.children[sourceIndex], newDestinationParent.children[destinationIndex]] =
+    [newDestinationParent.children[destinationIndex], newSourceParent.children[sourceIndex]];
 
-
-  console.log('newTree', getNewTree(state));
+  return newTree;
 });
 
 

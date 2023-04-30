@@ -207,25 +207,12 @@ const Content = memo(({element}) => {
   )
 })
 
-const getRows = (tree) => {
-  return tree.children.reduce((rows, node) => {
-    if (node.id.startsWith('row')) {
-      rows.push(node);
-    }
-
-    if (node.children) {
-      rows = rows.concat(getRows(node));
-    }
-
-    return rows;
-  }, []);
-}
-
+// ROWS
 const Rows = () => {
   const tree = useStore($tree);
-  const rows = getRows(tree);
+  const rows = tree.tbody.children.map((row) => tree[row]);
 
-  const rowsDraggable = getRows(tree).map((row, index) => {
+  const rowsDraggable = rows.map((row, index) => {
     return (
       <Draggable key={row.id} index={index} draggableId={row.id}>
         {(provided, snapshot) => (
@@ -236,15 +223,9 @@ const Rows = () => {
       </Draggable>
     )
   });
-
-  console.log('Rows', rows);
-
   const handleOnDragEnd = ({destination, source}) => {
     const rowSource = rows[source.index];
     const rowDestination = rows[destination?.index || 0];
-
-    console.log({destination, source})
-    console.log({rowSource, rowDestination})
 
     updatedTree({ source: rowSource, destination: rowDestination });
   }
@@ -267,6 +248,7 @@ const Rows = () => {
   )
 };
 
+// WIDTH
 const Width = () => {
   const width = useStore($width);
 
@@ -304,7 +286,7 @@ export const SettingsPanel = () => {
       </h3>
 
       <Width/>
-      {/*<Rows/>*/}
+      <Rows/>
       <Content element={element} />
       <FontSize element={element}/>
       <TextColor element={element} />

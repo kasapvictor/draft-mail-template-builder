@@ -44,8 +44,17 @@ const contentEditable = new Set([
   'title', 'text','link', 'button'
 ]);
 
-
 const mainColor = '#007BFF';
+
+const buildNestedTree = (flatTree, nodeId) => {
+  const node = flatTree[nodeId];
+  const children = node.children;
+
+  return {
+    ...node,
+    children: children ? children.map(childId => buildNestedTree(flatTree, childId)) : undefined
+  };
+}
 
 const useElementHandlers = ({type, isSelected, isSpecialType}) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -169,10 +178,11 @@ const RenderTree = ({ tree }) => {
 
 export const RenderTemplate = () => {
   const tree = useStore($tree);
+  const nestedTree = buildNestedTree(tree, 'root');
 
   return (
     <>
-      <RenderTree tree={tree}/>
+      <RenderTree tree={nestedTree}/>
       <ElementLabel/>
     </>
   )
