@@ -22,7 +22,7 @@ export const tree = {
                           id: 'td1',
                           children: [
                             {
-                              id: 'row1',
+                              id: 'section1',
                               children: [
                                 {
                                   id: 'block1',
@@ -44,7 +44,7 @@ export const tree = {
                           id: 'td2',
                           children: [
                             {
-                              id: 'row2',
+                              id: 'section2',
                               children: [
                                 {
                                   id: 'block2',
@@ -129,7 +129,7 @@ export const elements = {
   tr1: {
     id: 'tr1',
     tag: 'tr',
-    type: 'tr', // TODO добавить отдельный див с типом row
+    type: 'row', // TODO добавить отдельный див с типом row
     props: {
       style: {},
     },
@@ -148,10 +148,10 @@ export const elements = {
       },
     },
   },
-  row1: {
-    id:"row1",
+  section1: {
+    id:"section1",
     tag:"div",
-    type: 'row',
+    type: 'section',
     props: {
       style: {
         width: '100%',
@@ -196,7 +196,7 @@ export const elements = {
   tr2: {
     id: 'tr2',
     tag: 'tr',
-    type: 'tr',
+    type: 'row',
     props: {
       style: {},
     },
@@ -215,10 +215,10 @@ export const elements = {
       },
     },
   },
-  row2: {
-    id:"row2",
+  section2: {
+    id:"section2",
     tag:"div",
-    type: 'row',
+    type: 'section',
     props: {
       style: {
         width: '100%',

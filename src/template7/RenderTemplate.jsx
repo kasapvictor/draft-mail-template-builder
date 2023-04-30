@@ -122,7 +122,6 @@ const RenderElement = memo(({ elementId, children }) => {
     ...style,
     cursor: 'default',
     outlineOffset: '-1px',
-    position: isSelected || isHovered  ? "relative" : "static",
     outlineWidth: isSelected || isHovered ? '1px' : '0px',
     outlineColor: isSelected || isHovered ? mainColor : 'none',
     outlineStyle: isEmptyContent || isFontSizeZero ? 'dashed' : 'solid',
