@@ -47,12 +47,7 @@ const BuildToHtmlButton = ({onClick}) => {
   };
 
 
-  return (
-    <div>
-      <Button onClick={handleBuildHtml}>Build to HTML</Button>
-      <div><small>See to console</small></div>
-    </div>
-  )
+  return (<Button onClick={handleBuildHtml}>Build to HTML</Button>)
 };
 
 export const BuildRawHtml = () => {
@@ -60,7 +55,7 @@ export const BuildRawHtml = () => {
   return (
     <div style={{ textAlign: 'left'}}>
       <BuildToHtmlButton onClick={setHtml}/>
-      <br/>
+      <br/><br/>
       {html &&
         <Prism language="html"
                radius="md"
