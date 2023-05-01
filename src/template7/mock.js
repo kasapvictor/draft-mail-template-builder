@@ -53,7 +53,7 @@ const nav1 = {
           paddingBottom: '0px',
           paddingLeft: '0px',
           backgroundColor: '#ffffff',
-          textAlign: 'left',
+          textAlign: 'center',
         }
       }
     },
@@ -65,58 +65,7 @@ const nav1 = {
       props: {
         style: {
           width: '100%',
-          maxWidth: '50px',
-          display: 'inline-block',
-          marginTop: '0px',
-          marginRight: '0px',
-          marginBottom: '0px',
-          marginLeft: '0px',
-          paddingTop: '0px',
-          paddingRight: '0px',
-          paddingBottom: '0px',
-          paddingLeft: '0px',
-          backgroundColor: 'transparent',
-          borderTopWidth: '0px',
-          borderTopStyle: 'solid',
-          borderTopColor: 'transparent',
-          borderRightWidth: '0px',
-          borderRightStyle: 'solid',
-          borderRightColor: 'transparent',
-          borderBottomWidth: '0px',
-          borderBottomStyle: 'solid',
-          borderBottomColor: 'transparent',
-          borderLeftWidth: '2px',
-          borderLeftStyle: 'solid',
-          borderLeftColor: 'transparent',
-          verticalAlign: 'middle',
-        }
-      }
-    },
-    nav1Logo1: {
-      id:"nav1Logo1",
-      tag:"img",
-      type:"img",
-      props:{
-        src:IMG_SRC[2],
-        alt:"img",
-        style:{
-          display:'block',
-          width:'100%',
-          height:'auto',
-          margin:0,
-          verticalAlign: 'middle',
-        },
-      }
-    },
-
-    nav1block2: {
-      id:"nav1block2",
-      tag:"div",
-      type: 'block',
-      props: {
-        style: {
-          width: '100%',
-          maxWidth: '280px',
+          maxWidth: '80px',
           display: 'inline-block',
           marginTop: '0px',
           marginRight: '0px',
@@ -140,6 +89,60 @@ const nav1 = {
           borderLeftStyle: 'solid',
           borderLeftColor: 'transparent',
           verticalAlign: 'middle',
+          boxSizing: 'border-box',
+          textAlign: 'left',
+        }
+      }
+    },
+    nav1Logo1: {
+      id:"nav1Logo1",
+      tag:"img",
+      type:"img",
+      props:{
+        src:IMG_SRC[3],
+        alt:"img",
+        style:{
+          display:'block',
+          width:'100%',
+          height:'auto',
+          margin:0,
+          verticalAlign: 'middle',
+        },
+      }
+    },
+
+    nav1block2: {
+      id:"nav1block2",
+      tag:"div",
+      type: 'block',
+      props: {
+        style: {
+          width: '100%',
+          maxWidth: '220px',
+          display: 'inline-block',
+          marginTop: '0px',
+          marginRight: '0px',
+          marginBottom: '0px',
+          marginLeft: '0px',
+          paddingTop: '16px',
+          paddingRight: '16px',
+          paddingBottom: '16px',
+          paddingLeft: '0px',
+          backgroundColor: 'transparent',
+          borderTopWidth: '0px',
+          borderTopStyle: 'solid',
+          borderTopColor: 'transparent',
+          borderRightWidth: '0px',
+          borderRightStyle: 'solid',
+          borderRightColor: 'transparent',
+          borderBottomWidth: '0px',
+          borderBottomStyle: 'solid',
+          borderBottomColor: 'transparent',
+          borderLeftWidth: '2px',
+          borderLeftStyle: 'solid',
+          borderLeftColor: 'transparent',
+          verticalAlign: 'middle',
+          boxSizing: 'border-box',
         }
       }
     },
@@ -214,7 +217,7 @@ const nav1 = {
       props: {
         style: {
           width: '100%',
-          maxWidth: '265px',
+          maxWidth: '300px',
           display: 'inline-block',
           marginTop: '0px',
           marginRight: '0px',
@@ -238,6 +241,8 @@ const nav1 = {
           borderLeftStyle: 'solid',
           borderLeftColor: 'transparent',
           verticalAlign: 'middle',
+          boxSizing: 'border-box',
+          textAlign: 'center'
         }
       }
     },
@@ -252,7 +257,7 @@ const nav1 = {
         style: {
           display: 'inline-block',
           marginTop: '0px',
-          marginRight: '0px',
+          marginRight: '10px',
           marginBottom: '0px',
           marginLeft: '0px',
           paddingTop: '8px',
@@ -263,6 +268,13 @@ const nav1 = {
           fontSize: 14,
           color: '#273033',
           textDecoration: 'none',
+          borderWidth: '2px',
+          borderStyle: 'solid',
+          borderColor: '#69848D',
+          borderTopLeftRadius: '4px',
+          borderTopRightRadius: '4px',
+          borderBottomRightRadius: '4px',
+          borderBottomLeftRadius: '4px',
         }
       }
     },
@@ -287,6 +299,9 @@ const nav1 = {
           fontWeight: 400,
           fontSize: 14,
           color: '#FFFFFF',
+          borderWidth: '2px',
+          borderStyle: 'solid',
+          borderColor: '#69848D',
           backgroundColor: '#69848D',
           borderTopLeftRadius: '4px',
           borderTopRightRadius: '4px',
