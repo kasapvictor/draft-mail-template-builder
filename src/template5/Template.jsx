@@ -37,6 +37,8 @@ const htmlFormatted = (content) => {
     .replaceAll('&gt;', '>')
     .replaceAll('&quot;', '"');
 
+  console.log('content', content)
+
   return beautify.html_beautify(rawHtml, { indent_size: 2, space_in_empty_paren: true })
 }
 const html = htmlFormatted(<RawHtml content={<Content/>}/>);

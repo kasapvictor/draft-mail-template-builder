@@ -14,6 +14,10 @@ export const Styles = () => {
         -webkit-text-size-adjust: 100%;
         -ms-text-size-adjust: 100%;
       }
+      
+      .canvas * {
+        font-family: sans-serif;
+      }
 
       .canvas table,
       .canvas td {

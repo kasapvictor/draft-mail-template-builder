@@ -1,82 +1,5 @@
 import {IMG_SRC} from "../constants";
 
-// export const tree = {
-//   id: 'root',
-//   children: [
-//     {
-//       id: 'canvas',
-//       children: [
-//         {
-//           id: 'container',
-//           children: [
-//             {
-//               id: 'table',
-//               children: [
-//                 {
-//                   id: 'tbody',
-//                   children: [
-//                     {
-//                       id: 'row1',
-//                       name: 'header',
-//                       children: [
-//                         {
-//                           id: 'td1',
-//                           children: [
-//                             {
-//                               id: 'section1',
-//                               children: [
-//                                 {
-//                                   id: 'block1',
-//                                   children: [
-//                                   { id: 'title1' },
-//                                   { id: 'subtitle1' }
-//                                 ]
-//                                 }
-//                               ]
-//                             }
-//                           ]
-//                         }
-//                       ]
-//                     },
-//                     {
-//                       id: 'row2',
-//                       name: 'cta',
-//                       children: [
-//                         {
-//                           id: 'td2',
-//                           children: [
-//                             {
-//                               id: 'section2',
-//                               children: [
-//                                 {
-//                                   id: 'block2',
-//                                   children: [
-//                                     { id: 'text1' },
-//                                     { id: 'link1' }
-//                                   ]
-//                                 },
-//                                 {
-//                                   id: 'block3',
-//                                   children: [
-//                                     { id: 'img1' }
-//                                   ]
-//                                 }
-//                               ]
-//                             }
-//                           ]
-//                         }
-//                       ]
-//                     }
-//                   ]
-//                 }
-//               ]
-//             }
-//           ]
-//         }
-//       ]
-//     }
-//   ]
-// }
 
 export const tree = {
   root: { id: 'root', parent: null, children: ['canvas'] },
@@ -108,6 +31,7 @@ export const elements = {
     props: {
       className: "canvas",
       style: {
+        height: '100%',
         wordSpacing: 'normal',
         backgroundColor: '#f8f9fc',
         fontSize: 0,

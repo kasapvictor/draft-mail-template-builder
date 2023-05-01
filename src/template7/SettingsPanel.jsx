@@ -1,7 +1,13 @@
 import {memo} from "react";
+import beautify from "js-beautify";
+import ReactDOMServer from "react-dom/server";
 import {useStore, useStoreMap} from "effector-react";
-import { useListState } from '@mantine/hooks';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Draggable } from 'react-beautiful-dnd';
+
+import {Button} from "@mantine/core";
+
+import {WIDTH} from "../constants.js";
+import {$width, widthChanged} from "../models/model-width.js";
 
 import {
   $elements,
@@ -14,8 +20,6 @@ import {
   handleTextColor, updatedTree
 } from "./store.js";
 
-import {$width, widthChanged} from "../models/model-width.js";
-import {WIDTH} from "../constants.js";
 import {StrictModeDroppable} from "./StrictModeDroppable.jsx";
 
 const contentEditable = new Set([
@@ -37,6 +41,9 @@ const useSelectedElement = (selectedElementId) => {
     fn: (elements, [id]) => elements[id] || null,
   });
 };
+
+
+
 
 // PADDING
 const Padding = memo(({element}) => {
@@ -299,7 +306,7 @@ export const SettingsPanel = () => {
 
 // TODO
 //  + 1) переключение экранов с 600 на 300
-//  2) добавить смену позиции секций
+//  + 2) добавить смену позиции секций
 //  3) создать структуру реального шаблона
 //  4) сделать выгрузку в шаблона в html для тестов
 //  + 5) при клике на canvas должны открываться настройки всего шаблона

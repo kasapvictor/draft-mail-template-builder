@@ -256,7 +256,6 @@ const ElementLabelHovered = () => {
   const target = useStore($hoveredElementRef);
   const position = useLabelElementPosition(target);
 
-
   return target && createPortal(
     <div style={{ ...labelStyle, ...position }}>{target.dataset.type}</div>,
     document.body
