@@ -37,7 +37,7 @@ const nav1 = {
         align:"center",
         valign:"top",
         style: {
-          fontSize: 0
+          fontSize: '0px'
         },
       },
     },
@@ -48,12 +48,8 @@ const nav1 = {
       props: {
         style: {
           width: '100%',
-          paddingTop: '0px',
-          paddingRight: '0px',
-          paddingBottom: '0px',
-          paddingLeft: '0px',
           backgroundColor: '#ffffff',
-          textAlign: 'center',
+          textAlign: 'left',
         }
       }
     },
@@ -67,27 +63,10 @@ const nav1 = {
           width: '100%',
           maxWidth: '80px',
           display: 'inline-block',
-          marginTop: '0px',
-          marginRight: '0px',
-          marginBottom: '0px',
-          marginLeft: '0px',
           paddingTop: '16px',
           paddingRight: '16px',
           paddingBottom: '16px',
           paddingLeft: '16px',
-          backgroundColor: 'transparent',
-          borderTopWidth: '0px',
-          borderTopStyle: 'solid',
-          borderTopColor: 'transparent',
-          borderRightWidth: '0px',
-          borderRightStyle: 'solid',
-          borderRightColor: 'transparent',
-          borderBottomWidth: '0px',
-          borderBottomStyle: 'solid',
-          borderBottomColor: 'transparent',
-          borderLeftWidth: '2px',
-          borderLeftStyle: 'solid',
-          borderLeftColor: 'transparent',
           verticalAlign: 'middle',
           boxSizing: 'border-box',
           textAlign: 'left',
@@ -105,7 +84,6 @@ const nav1 = {
           display:'block',
           width:'100%',
           height:'auto',
-          margin:0,
           verticalAlign: 'middle',
         },
       }
@@ -120,27 +98,9 @@ const nav1 = {
           width: '100%',
           maxWidth: '220px',
           display: 'inline-block',
-          marginTop: '0px',
-          marginRight: '0px',
-          marginBottom: '0px',
-          marginLeft: '0px',
           paddingTop: '16px',
           paddingRight: '16px',
           paddingBottom: '16px',
-          paddingLeft: '0px',
-          backgroundColor: 'transparent',
-          borderTopWidth: '0px',
-          borderTopStyle: 'solid',
-          borderTopColor: 'transparent',
-          borderRightWidth: '0px',
-          borderRightStyle: 'solid',
-          borderRightColor: 'transparent',
-          borderBottomWidth: '0px',
-          borderBottomStyle: 'solid',
-          borderBottomColor: 'transparent',
-          borderLeftWidth: '2px',
-          borderLeftStyle: 'solid',
-          borderLeftColor: 'transparent',
           verticalAlign: 'middle',
           boxSizing: 'border-box',
         }
@@ -156,9 +116,7 @@ const nav1 = {
         target: "_blank",
         style: {
           display: 'inline-block',
-          paddingTop: '0px',
           paddingRight: '10px',
-          paddingBottom: '0px',
           paddingLeft: '10px',
           fontWeight: 400,
           fontSize: 14,
@@ -179,7 +137,6 @@ const nav1 = {
           display: 'inline-block',
           paddingTop: '0px',
           paddingRight: '10px',
-          paddingBottom: '0px',
           paddingLeft: '10px',
           fontWeight: 400,
           fontSize: 14,
@@ -198,9 +155,7 @@ const nav1 = {
         target: "_blank",
         style: {
           display: 'inline-block',
-          paddingTop: '0px',
           paddingRight: '10px',
-          paddingBottom: '0px',
           paddingLeft: '10px',
           fontWeight: 400,
           fontSize: 14,
@@ -219,30 +174,13 @@ const nav1 = {
           width: '100%',
           maxWidth: '300px',
           display: 'inline-block',
-          marginTop: '0px',
-          marginRight: '0px',
-          marginBottom: '0px',
-          marginLeft: '0px',
           paddingTop: '16px',
           paddingRight: '16px',
           paddingBottom: '16px',
           paddingLeft: '16px',
-          backgroundColor: 'transparent',
-          borderTopWidth: '0px',
-          borderTopStyle: 'solid',
-          borderTopColor: 'transparent',
-          borderRightWidth: '0px',
-          borderRightStyle: 'solid',
-          borderRightColor: 'transparent',
-          borderBottomWidth: '0px',
-          borderBottomStyle: 'solid',
-          borderBottomColor: 'transparent',
-          borderLeftWidth: '2px',
-          borderLeftStyle: 'solid',
-          borderLeftColor: 'transparent',
           verticalAlign: 'middle',
           boxSizing: 'border-box',
-          textAlign: 'center'
+          textAlign: 'left'
         }
       }
     },
@@ -256,18 +194,15 @@ const nav1 = {
         target: "_blank",
         style: {
           display: 'inline-block',
-          marginTop: '0px',
           marginRight: '10px',
-          marginBottom: '0px',
-          marginLeft: '0px',
           paddingTop: '8px',
           paddingRight: '16px',
           paddingBottom: '8px',
           paddingLeft: '16px',
           fontWeight: 400,
           fontSize: 14,
-          color: '#69848D',
           textDecoration: 'none',
+          color: '#69848D',
           borderWidth: '2px',
           borderStyle: 'solid',
           borderColor: '#69848D',
@@ -288,10 +223,6 @@ const nav1 = {
         target: "_blank",
         style: {
           display: 'inline-block',
-          marginTop: '0px',
-          marginRight: '0px',
-          marginBottom: '0px',
-          marginLeft: '0px',
           paddingTop: '8px',
           paddingRight: '16px',
           paddingBottom: '8px',
@@ -313,6 +244,249 @@ const nav1 = {
     },
   }
 };
+
+const hero1 = {
+  tree: {
+    hero1row1: { id: 'hero1row1', parent: 'tbody', name: 'hero1', children: ['hero1td1'] },
+    hero1td1: { id: 'hero1td1', parent: 'hero1row1', children: ['hero1section1'] },
+    hero1section1: { id: 'hero1section1', parent: 'hero1td1',  children: ['hero1block1', 'hero1block3'] },
+
+    hero1block1: { id: 'hero1block1', parent: 'hero1section1', children: ['hero1text1', 'hero1title1', 'hero1text2', 'hero1block2'] },
+    hero1text1: { id: 'hero1text1', parent: 'hero1block1' },
+    hero1title1: { id: 'hero1title1', parent: 'hero1block1' },
+    hero1text2: { id: 'hero1text2', parent: 'hero1block1' },
+
+    hero1block2: { id: 'hero1block2', parent: 'hero1block1', children: ['hero1Button1', 'hero1Button2'] },
+    hero1Button1: { id: 'hero1Button1', parent: 'hero1block2' },
+    hero1Button2: { id: 'hero1Button2', parent: 'hero1block2' },
+
+    hero1block3: { id: 'hero1block3', parent: 'hero1section1', children: ['hero1image1'] },
+    hero1image1: { id: 'hero1image1', parent: 'hero1block3' },
+  },
+  elements: {
+    hero1row1: {
+      id: 'hero1row1',
+      tag: 'tr',
+      type: 'row',
+      props: {
+        style: {},
+      },
+    },
+    hero1td1: {
+      id: "hero1td1",
+      tag: 'td',
+      type: 'td',
+      props: {
+        width:"100%",
+        height:"100%",
+        align:"center",
+        valign:"top",
+        style: {
+          fontSize: 0
+        },
+      },
+    },
+    hero1section1: {
+      id:"hero1section1",
+      tag:"div",
+      type: 'section',
+      props: {
+        style: {
+          width: '100%',
+          backgroundColor: '#ffffff',
+          textAlign: 'left',
+        }
+      }
+    },
+
+    hero1block1: {
+      id:"hero1block1",
+        tag:"div",
+        type: 'block',
+        props: {
+        style: {
+          width: '100%',
+            maxWidth: '300px',
+            display: 'inline-block',
+            paddingTop: '10px',
+            paddingBottom: '20px',
+            paddingLeft: '20px',
+            verticalAlign: 'middle',
+            boxSizing: 'border-box',
+            textAlign: 'left',
+        }
+      }
+    },
+    hero1text1: {
+      id:"hero1text1",
+      tag:"div",
+      type: 'text',
+      content:"Service software",
+      contentEditable: true,
+      props: {
+        style: {
+          display: 'inline-block',
+          width: '100%',
+          paddingBottom: '10px',
+          fontSize: '14px',
+          fontWeight: 400,
+          lineHeight: 1.5,
+          color: '#69848D',
+          textAlign: 'left',
+        }
+      }
+    },
+    hero1title1: {
+      id:"hero1title1",
+      tag:"div",
+      type: 'title',
+      content:"Customer service software for customer-first teams",
+      contentEditable: true,
+      props: {
+        style: {
+          display: 'inline-block',
+          width: '100%',
+          paddingBottom: '10px',
+          fontSize: '24px',
+          fontWeight: 600,
+          lineHeight: 1.2,
+          color: '#273033',
+          textAlign: 'left',
+        }
+      }
+    },
+    hero1text2: {
+      id:"hero1text2",
+      tag:"div",
+      type: 'text',
+      content:"The best customer service software for customer-first teams. Industry-leading email and live chat support.",
+      contentEditable: true,
+      props: {
+        style: {
+          display: 'inline-block',
+          width: '100%',
+          paddingBottom: '15px',
+          fontSize: '16px',
+          fontWeight: 400,
+          lineHeight: 1.5,
+          color: '#667085',
+          textAlign: 'left',
+        }
+      }
+    },
+
+    hero1block2: {
+      id:"hero1block1",
+      tag:"div",
+      type: 'block',
+      props: {
+        style: {
+          width: '100%',
+          maxWidth: '300px',
+          display: 'inline-block',
+          verticalAlign: 'middle',
+          boxSizing: 'border-box',
+          textAlign: 'left',
+        }
+      }
+    },
+    hero1Button1: {
+      id:"hero1Button1",
+      tag:"a",
+      type: "link",
+      content:"Buy Template",
+      props:{
+        href:"#",
+        target: "_blank",
+        style: {
+          display: 'inline-block',
+          marginRight: '10px',
+          paddingTop: '8px',
+          paddingRight: '16px',
+          paddingBottom: '8px',
+          paddingLeft: '16px',
+          fontWeight: 400,
+          fontSize: 14,
+          color: '#FFFFFF',
+          borderWidth: '2px',
+          borderStyle: 'solid',
+          borderColor: '#69848D',
+          backgroundColor: '#69848D',
+          borderTopLeftRadius: '4px',
+          borderTopRightRadius: '4px',
+          borderBottomRightRadius: '4px',
+          borderBottomLeftRadius: '4px',
+          textDecoration: 'none',
+        }
+      }
+    },
+    hero1Button2: {
+      id:"hero1Button2",
+      tag:"a",
+      type: "link",
+      content:"Watch Demo",
+      props:{
+        href:"#",
+        target: "_blank",
+        style: {
+          display: 'inline-block',
+
+          paddingTop: '8px',
+          paddingRight: '16px',
+          paddingBottom: '8px',
+          paddingLeft: '16px',
+          fontWeight: 400,
+          fontSize: 14,
+          textDecoration: 'none',
+          color: '#69848D',
+          borderWidth: '2px',
+          borderStyle: 'solid',
+          borderColor: '#69848D',
+          borderTopLeftRadius: '4px',
+          borderTopRightRadius: '4px',
+          borderBottomRightRadius: '4px',
+          borderBottomLeftRadius: '4px',
+        }
+      }
+    },
+
+    hero1block3: {
+      id:"hero1block3",
+      tag:"div",
+      type: 'block',
+      props: {
+        style: {
+          width: '100%',
+          maxWidth: '300px',
+          display: 'inline-block',
+          paddingTop: '20px',
+          paddingRight: '20px',
+          paddingBottom: '20px',
+          paddingLeft: '20px',
+          verticalAlign: 'middle',
+          boxSizing: 'border-box',
+          textAlign: 'left',
+        }
+      }
+    },
+    hero1image1: {
+      id:"hero1image1",
+      tag:"img",
+      type:"img",
+      props:{
+        src:IMG_SRC[1],
+        alt:"img",
+        style:{
+          display:'block',
+          width:'100%',
+          height:'auto',
+          verticalAlign: 'middle',
+          borderRadius: '8px',
+        },
+      }
+    },
+  },
+}
 
 const quote1 = {
   tree: {
@@ -346,7 +520,7 @@ const quote1 = {
         align:"center",
         valign:"top",
         style: {
-          fontSize: 0
+          fontSize: '0px'
         },
       },
     },
@@ -392,7 +566,7 @@ const quote1 = {
           display: 'inline-block',
           paddingBottom: '32px',
           paddingLeft: '16px',
-          fontSize: 20,
+          fontSize: '20px',
           fontWeight: 400,
           lineHeight: 1.5,
           color: '#273033',
@@ -454,7 +628,7 @@ const quote1 = {
         style: {
           display: 'inline-block',
           width: '100%',
-          fontSize: 12,
+          fontSize: '12px',
           fontWeight: 600,
           lineHeight: 1.5,
           color: '#273033',
@@ -473,7 +647,7 @@ const quote1 = {
         style: {
           display: 'inline-block',
           width: '100%',
-          fontSize: 10,
+          fontSize: '10px',
           fontWeight: 400,
           lineHeight: 1.5,
           color: '#475467',
@@ -491,9 +665,10 @@ export const tree = {
   canvas: { id: 'canvas', parent: 'root', children: ['container'] },
   container: { id: 'container', parent: 'canvas', children: ['table'] },
   table: { id: 'table', parent: 'container', children: ['tbody'] },
-  tbody: { id: 'tbody', parent: 'table', children: ['nav1row1','quote1row1', 'row2'] },
+  tbody: { id: 'tbody', parent: 'table', children: ['nav1row1', 'hero1row1', 'quote1row1', 'row2'] },
 
   ...nav1.tree,
+  ...hero1.tree,
   ...quote1.tree,
   // row1: { id: 'row1', parent: 'tbody', name: 'quote', children: ['td1'] },
   // td1: { id: 'td1', parent: 'row1', children: ['section1'] },
@@ -568,6 +743,7 @@ export const elements = {
   },
 
   ...nav1.elements,
+  ...hero1.elements,
   ...quote1.elements,
 
   // row1: {
