@@ -7,6 +7,9 @@ export const IMG_SRC = [
   'https://vicawsbucket.s3.us-west-1.amazonaws.com/person2.png',
   'https://vicawsbucket.s3.us-west-1.amazonaws.com/person3.png',
   'https://vicawsbucket.s3.us-west-1.amazonaws.com/stars.png',
+  'https://vicawsbucket.s3.us-west-1.amazonaws.com/social1.png',
+  'https://vicawsbucket.s3.us-west-1.amazonaws.com/social2.png',
+  'https://vicawsbucket.s3.us-west-1.amazonaws.com/social3.png'
 ]
 
 export const WIDTH = {
