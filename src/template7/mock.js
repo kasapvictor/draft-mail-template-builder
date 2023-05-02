@@ -78,7 +78,7 @@ const nav1 = {
       tag:"img",
       type:"img",
       props:{
-        src:IMG_SRC[0],
+        src:IMG_SRC[2],
         alt:"img",
         style:{
           display:'block',
@@ -328,8 +328,8 @@ const hero1 = {
           display: 'inline-block',
           width: '100%',
           paddingBottom: '10px',
-          fontSize: '14px',
-          fontWeight: 400,
+          fontSize: '12px',
+          fontWeight: 100,
           lineHeight: 1.5,
           color: '#69848D',
           textAlign: 'left',
@@ -488,6 +488,629 @@ const hero1 = {
   },
 }
 
+const reviews1 = {
+  tree: {
+    reviews1row1: { id: 'reviews1row1', parent: 'tbody', name: 'reviews1', children: ['reviews1td1'] },
+    reviews1td1: { id: 'reviews1td1', parent: 'reviews1row1', children: ['reviews1section1'] },
+    reviews1section1: { id: 'reviews1section1', parent: 'reviews1td1',  children: ['reviews1block1', 'reviews1block2'] },
+
+    reviews1block1: { id: 'reviews1block1', parent: 'reviews1section1', children: ['reviews1text1', 'reviews1title1', 'reviews1text2'] },
+    reviews1text1: { id: 'reviews1text1', parent: 'reviews1block1' },
+    reviews1title1: { id: 'reviews1title1', parent: 'reviews1block1' },
+    reviews1text2: { id: 'reviews1text2', parent: 'reviews1block1' },
+
+    reviews1block2: { id: 'reviews1block2', parent: 'reviews1section1', children: ['reviews1block3', 'reviews1block5', 'reviews1block7', 'reviews1block9'] },
+
+    reviews1block3: { id: 'reviews1block3', parent: 'reviews1block2', children: ['reviews1block4'] },
+    reviews1block4: { id: 'reviews1block4', parent: 'reviews1block3', children: ['reviews1image1', 'reviews1text3', 'reviews1image2', 'reviews1text4'] },
+    reviews1image1: { id: 'reviews1image1', parent: 'reviews1block4', children: [] },
+    reviews1text3: { id: 'reviews1text3', parent: 'reviews1block4' },
+    reviews1image2: { id: 'reviews1image2', parent: 'reviews1block4', children: [] },
+    reviews1text4: { id: 'reviews1text4', parent: 'reviews1block4' },
+
+
+    reviews1block5: { id: 'reviews1block5', parent: 'reviews1block2', children: ['reviews1block6'] },
+    reviews1block6: { id: 'reviews1block4', parent: 'reviews1block5', children: ['reviews1image3', 'reviews1text5', 'reviews1image4', 'reviews1text6'] },
+    reviews1image3: { id: 'reviews1image3', parent: 'reviews1block6', children: [] },
+    reviews1text5: { id: 'reviews1text5', parent: 'reviews1block6' },
+    reviews1image4: { id: 'reviews1image4', parent: 'reviews1block6', children: [] },
+    reviews1text6: { id: 'reviews1text6', parent: 'reviews1block6' },
+
+    reviews1block7: { id: 'reviews1block7', parent: 'reviews1block2', children: ['reviews1block8'] },
+    reviews1block8: { id: 'reviews1block8', parent: 'reviews1block7', children: ['reviews1image5', 'reviews1text7', 'reviews1image6', 'reviews1text8'] },
+    reviews1image5: { id: 'reviews1image5', parent: 'reviews1block8', children: [] },
+    reviews1text7: { id: 'reviews1text7', parent: 'reviews1block8' },
+    reviews1image6: { id: 'reviews1image6', parent: 'reviews1block8', children: [] },
+    reviews1text8: { id: 'reviews1text8', parent: 'reviews1block8' },
+
+    reviews1block9: { id: 'reviews1block9', parent: 'reviews1block2', children: ['reviews1block10'] },
+    reviews1block10: { id: 'reviews1block10', parent: 'reviews1block9', children: ['reviews1image7', 'reviews1text9', 'reviews1image8', 'reviews1text10'] },
+    reviews1image7: { id: 'reviews1image7', parent: 'reviews1block10', children: [] },
+    reviews1text9: { id: 'reviews1text9', parent: 'reviews1block10' },
+    reviews1image8: { id: 'reviews1image8', parent: 'reviews1block10', children: [] },
+    reviews1text10: { id: 'reviews1text10', parent: 'reviews1block10' },
+  },
+  elements: {
+    reviews1row1: {
+      id: 'reviews1row1',
+      tag: 'tr',
+      type: 'row',
+      props: {
+        style: {},
+      },
+    },
+    reviews1td1: {
+      id: "reviews1td1",
+      tag: 'td',
+      type: 'td',
+      props: {
+        width:"100%",
+        height:"100%",
+        align:"center",
+        valign:"top",
+        style: {
+          fontSize: 0
+        },
+      },
+    },
+    reviews1section1: {
+      id:"reviews1section1",
+      tag:"div",
+      type: 'section',
+      props: {
+        style: {
+          width: '100%',
+          backgroundColor: '#ffffff',
+          textAlign: 'center',
+        }
+      }
+    },
+
+    reviews1block1: {
+      id:"reviews1block1",
+      tag:"div",
+      type: 'block',
+      props: {
+        style: {
+          width: '100%',
+          maxWidth: '600px',
+          display: 'inline-block',
+          paddingTop: '20px',
+          verticalAlign: 'middle',
+          boxSizing: 'border-box',
+          textAlign: 'center',
+        }
+      }
+    },
+    reviews1text1: {
+      id:"reviews1text1",
+      tag:"div",
+      type: 'text',
+      content:"Service software",
+      contentEditable: true,
+      props: {
+        style: {
+          display: 'inline-block',
+          width: '100%',
+          paddingBottom: '10px',
+          fontSize: '12px',
+          fontWeight: 100,
+          lineHeight: 1.5,
+          color: '#69848D',
+          textAlign: 'center',
+        }
+      }
+    },
+    reviews1title1: {
+      id:"reviews1title1",
+      tag:"div",
+      type: 'title',
+      content:"Latest blog posts",
+      contentEditable: true,
+      props: {
+        style: {
+          display: 'inline-block',
+          width: '100%',
+          paddingBottom: '10px',
+          fontSize: '28px',
+          fontWeight: 600,
+          lineHeight: 1.2,
+          color: '#273033',
+          textAlign: 'center',
+        }
+      }
+    },
+    reviews1text2: {
+      id:"reviews1text2",
+      tag:"div",
+      type: 'text',
+      content:"Join over 4,000+ startups already growing with Untitled.",
+      contentEditable: true,
+      props: {
+        style: {
+          display: 'inline-block',
+          width: '100%',
+          paddingBottom: '15px',
+          fontSize: '20px',
+          fontWeight: 400,
+          lineHeight: 1.5,
+          color: '#667085',
+          textAlign: 'center',
+        }
+      }
+    },
+
+    reviews1block2: {
+      id:"reviews1block2",
+      tag:"div",
+      type: 'block',
+      props: {
+        style: {
+          width: '100%',
+          maxWidth: '600px',
+          display: 'inline-block',
+          paddingTop: '20px',
+          paddingBottom: '20px',
+          verticalAlign: 'middle',
+          boxSizing: 'border-box',
+          textAlign: 'center',
+        }
+      }
+    },
+
+    reviews1block3: {
+      id:"reviews1block3",
+      tag:"div",
+      type: 'block',
+      props: {
+        style: {
+          width: '100%',
+          maxWidth: '300px',
+          display: 'inline-block',
+          paddingRight: '10px',
+          paddingLeft: '10px',
+          paddingBottom: '20px',
+          verticalAlign: 'middle',
+          boxSizing: 'border-box',
+          textAlign: 'center',
+        }
+      }
+    },
+    reviews1block4: {
+      id:"reviews1block3",
+      tag:"div",
+      type: 'block',
+      props: {
+        style: {
+          width: '100%',
+          maxWidth: '300px',
+          display: 'inline-block',
+          paddingTop: '20px',
+          paddingRight: '20px',
+          paddingBottom: '20px',
+          paddingLeft: '20px',
+          verticalAlign: 'middle',
+          boxSizing: 'border-box',
+          textAlign: 'center',
+          backgroundColor: '#F9FAFB',
+          borderTopLeftRadius: '8px',
+          borderTopRightRadius: '8px',
+          borderBottomRightRadius: '8px',
+          borderBottomLeftRadius: '8px',
+        }
+      }
+    },
+    reviews1image1: {
+      id:"reviews1image1",
+      tag:"img",
+      type:"img",
+      props:{
+        src:IMG_SRC[6],
+        alt:"img",
+        style:{
+          display:'inline-block',
+          width:'48px',
+          height:'48px',
+          marginBottom: '16px',
+          verticalAlign: 'middle',
+          objectFit: 'cover',
+          borderRadius: '50%',
+        },
+      }
+    },
+    reviews1text3: {
+      id:"reviews1text3",
+      tag:"div",
+      type: 'text',
+      content:"Olivia Rhye",
+      contentEditable: true,
+      props: {
+        style: {
+          display: 'inline-block',
+          width: '100%',
+          fontSize: '16px',
+          fontWeight: 600,
+          lineHeight: 1,
+          color: '#101828',
+          textAlign: 'center',
+        }
+      }
+    },
+    reviews1image2: {
+      id:"reviews1image2",
+      tag:"img",
+      type:"img",
+      props:{
+        src:IMG_SRC[7],
+        alt:"img",
+        style:{
+          display:'inline-block',
+          width:'100px',
+          marginBottom: '8px',
+          verticalAlign: 'middle',
+        },
+      }
+    },
+    reviews1text4: {
+      id:"reviews1text4",
+      tag:"div",
+      type: 'text',
+      content:"We can’t imagine working without it. Love the simplicity of the service and the prompt customer support. We can’t imagine working without it.",
+      contentEditable: true,
+      props: {
+        style: {
+          display: 'inline-block',
+          width: '100%',
+          fontSize: '16px',
+          fontWeight: 400,
+          lineHeight: 1.5,
+          color: '#475467',
+          textAlign: 'center',
+        }
+      }
+    },
+
+    reviews1block5: {
+      id:"reviews1block5",
+      tag:"div",
+      type: 'block',
+      props: {
+        style: {
+          width: '100%',
+          maxWidth: '300px',
+          display: 'inline-block',
+          paddingRight: '10px',
+          paddingLeft: '10px',
+          paddingBottom: '20px',
+          verticalAlign: 'middle',
+          boxSizing: 'border-box',
+          textAlign: 'center',
+        }
+      }
+    },
+    reviews1block6: {
+      id:"reviews1block6",
+      tag:"div",
+      type: 'block',
+      props: {
+        style: {
+          width: '100%',
+          maxWidth: '300px',
+          display: 'inline-block',
+          paddingTop: '20px',
+          paddingRight: '20px',
+          paddingBottom: '20px',
+          paddingLeft: '20px',
+          verticalAlign: 'middle',
+          boxSizing: 'border-box',
+          textAlign: 'center',
+          backgroundColor: '#F9FAFB',
+          borderTopLeftRadius: '8px',
+          borderTopRightRadius: '8px',
+          borderBottomRightRadius: '8px',
+          borderBottomLeftRadius: '8px',
+        }
+      }
+    },
+    reviews1image3: {
+      id:"reviews1image3",
+      tag:"img",
+      type:"img",
+      props:{
+        src:IMG_SRC[6],
+        alt:"img",
+        style:{
+          display:'inline-block',
+          width:'48px',
+          height:'48px',
+          marginBottom: '16px',
+          verticalAlign: 'middle',
+          objectFit: 'cover',
+          borderRadius: '50%',
+        },
+      }
+    },
+    reviews1text5: {
+      id:"reviews1text5",
+      tag:"div",
+      type: 'text',
+      content:"Olivia Rhye",
+      contentEditable: true,
+      props: {
+        style: {
+          display: 'inline-block',
+          width: '100%',
+          fontSize: '16px',
+          fontWeight: 600,
+          lineHeight: 1,
+          color: '#101828',
+          textAlign: 'center',
+        }
+      }
+    },
+    reviews1image4: {
+      id:"reviews1image4",
+      tag:"img",
+      type:"img",
+      props:{
+        src:IMG_SRC[7],
+        alt:"img",
+        style:{
+          display:'inline-block',
+          width:'100px',
+          marginBottom: '8px',
+          verticalAlign: 'middle',
+        },
+      }
+    },
+    reviews1text6: {
+      id:"reviews1text6",
+      tag:"div",
+      type: 'text',
+      content:"We can’t imagine working without it. Love the simplicity of the service and the prompt customer support. We can’t imagine working without it.",
+      contentEditable: true,
+      props: {
+        style: {
+          display: 'inline-block',
+          width: '100%',
+          fontSize: '16px',
+          fontWeight: 400,
+          lineHeight: 1.5,
+          color: '#475467',
+          textAlign: 'center',
+        }
+      }
+    },
+
+    reviews1block7: {
+      id:"reviews1block7",
+      tag:"div",
+      type: 'block',
+      props: {
+        style: {
+          width: '100%',
+          maxWidth: '300px',
+          display: 'inline-block',
+          paddingRight: '10px',
+          paddingLeft: '10px',
+          paddingBottom: '20px',
+          verticalAlign: 'middle',
+          boxSizing: 'border-box',
+          textAlign: 'center',
+        }
+      }
+    },
+    reviews1block8: {
+      id:"reviews1block8",
+      tag:"div",
+      type: 'block',
+      props: {
+        style: {
+          width: '100%',
+          maxWidth: '300px',
+          display: 'inline-block',
+          paddingTop: '20px',
+          paddingRight: '20px',
+          paddingBottom: '20px',
+          paddingLeft: '20px',
+          verticalAlign: 'middle',
+          boxSizing: 'border-box',
+          textAlign: 'center',
+          backgroundColor: '#F9FAFB',
+          borderTopLeftRadius: '8px',
+          borderTopRightRadius: '8px',
+          borderBottomRightRadius: '8px',
+          borderBottomLeftRadius: '8px',
+        }
+      }
+    },
+    reviews1image5: {
+      id:"reviews1image5",
+      tag:"img",
+      type:"img",
+      props:{
+        src:IMG_SRC[6],
+        alt:"img",
+        style:{
+          display:'inline-block',
+          width:'48px',
+          height:'48px',
+          marginBottom: '16px',
+          verticalAlign: 'middle',
+          objectFit: 'cover',
+          borderRadius: '50%',
+        },
+      }
+    },
+    reviews1text7: {
+      id:"reviews1text7",
+      tag:"div",
+      type: 'text',
+      content:"Olivia Rhye",
+      contentEditable: true,
+      props: {
+        style: {
+          display: 'inline-block',
+          width: '100%',
+          fontSize: '16px',
+          fontWeight: 600,
+          lineHeight: 1,
+          color: '#101828',
+          textAlign: 'center',
+        }
+      }
+    },
+    reviews1image6: {
+      id:"reviews1image6",
+      tag:"img",
+      type:"img",
+      props:{
+        src:IMG_SRC[7],
+        alt:"img",
+        style:{
+          display:'inline-block',
+          width:'100px',
+          marginBottom: '8px',
+          verticalAlign: 'middle',
+        },
+      }
+    },
+    reviews1text8: {
+      id:"reviews1text8",
+      tag:"div",
+      type: 'text',
+      content:"We can’t imagine working without it. Love the simplicity of the service and the prompt customer support. We can’t imagine working without it.",
+      contentEditable: true,
+      props: {
+        style: {
+          display: 'inline-block',
+          width: '100%',
+          fontSize: '16px',
+          fontWeight: 400,
+          lineHeight: 1.5,
+          color: '#475467',
+          textAlign: 'center',
+        }
+      }
+    },
+
+    reviews1block9: {
+      id:"reviews1block9",
+      tag:"div",
+      type: 'block',
+      props: {
+        style: {
+          width: '100%',
+          maxWidth: '300px',
+          display: 'inline-block',
+          paddingRight: '10px',
+          paddingLeft: '10px',
+          paddingBottom: '20px',
+          verticalAlign: 'middle',
+          boxSizing: 'border-box',
+          textAlign: 'center',
+        }
+      }
+    },
+    reviews1block10: {
+      id:"reviews1block10",
+      tag:"div",
+      type: 'block',
+      props: {
+        style: {
+          width: '100%',
+          maxWidth: '300px',
+          display: 'inline-block',
+          paddingTop: '20px',
+          paddingRight: '20px',
+          paddingBottom: '20px',
+          paddingLeft: '20px',
+          verticalAlign: 'middle',
+          boxSizing: 'border-box',
+          textAlign: 'center',
+          backgroundColor: '#F9FAFB',
+          borderTopLeftRadius: '8px',
+          borderTopRightRadius: '8px',
+          borderBottomRightRadius: '8px',
+          borderBottomLeftRadius: '8px',
+        }
+      }
+    },
+    reviews1image7: {
+      id:"reviews1image7",
+      tag:"img",
+      type:"img",
+      props:{
+        src:IMG_SRC[6],
+        alt:"img",
+        style:{
+          display:'inline-block',
+          width:'48px',
+          height:'48px',
+          marginBottom: '16px',
+          verticalAlign: 'middle',
+          objectFit: 'cover',
+          borderRadius: '50%',
+        },
+      }
+    },
+    reviews1text9: {
+      id:"reviews1text9",
+      tag:"div",
+      type: 'text',
+      content:"Olivia Rhye",
+      contentEditable: true,
+      props: {
+        style: {
+          display: 'inline-block',
+          width: '100%',
+          fontSize: '16px',
+          fontWeight: 600,
+          lineHeight: 1,
+          color: '#101828',
+          textAlign: 'center',
+        }
+      }
+    },
+    reviews1image8: {
+      id:"reviews1image8",
+      tag:"img",
+      type:"img",
+      props:{
+        src:IMG_SRC[7],
+        alt:"img",
+        style:{
+          display:'inline-block',
+          width:'100px',
+          marginBottom: '8px',
+          verticalAlign: 'middle',
+        },
+      }
+    },
+    reviews1text10: {
+      id:"reviews1text10",
+      tag:"div",
+      type: 'text',
+      content:"We can’t imagine working without it. Love the simplicity of the service and the prompt customer support. We can’t imagine working without it.",
+      contentEditable: true,
+      props: {
+        style: {
+          display: 'inline-block',
+          width: '100%',
+          fontSize: '16px',
+          fontWeight: 400,
+          lineHeight: 1.5,
+          color: '#475467',
+          textAlign: 'center',
+        }
+      }
+    },
+
+
+
+  }
+}
+
 const quote1 = {
   tree: {
     quote1row1: { id: 'quote1row1', parent: 'tbody', name: 'quote1', children: ['quote1td1'] },
@@ -590,7 +1213,7 @@ const quote1 = {
       tag:"img",
       type:"img",
       props:{
-        src: IMG_SRC[0],
+        src: IMG_SRC[5],
         alt: "img",
         style:{
           display:'inline-block',
@@ -598,7 +1221,7 @@ const quote1 = {
           height:'35px',
           marginLeft: '16px',
           borderRadius: '50%',
-          textAlign: 'left',
+          textAlign: 'left'
         },
       }
     },
@@ -665,10 +1288,11 @@ export const tree = {
   canvas: { id: 'canvas', parent: 'root', children: ['container'] },
   container: { id: 'container', parent: 'canvas', children: ['table'] },
   table: { id: 'table', parent: 'container', children: ['tbody'] },
-  tbody: { id: 'tbody', parent: 'table', children: ['nav1row1', 'hero1row1', 'quote1row1', 'row2'] },
+  tbody: { id: 'tbody', parent: 'table', children: ['nav1row1', 'hero1row1', 'reviews1row1', 'quote1row1', 'row2'] },
 
   ...nav1.tree,
   ...hero1.tree,
+  ...reviews1.tree,
   ...quote1.tree,
   // row1: { id: 'row1', parent: 'tbody', name: 'quote', children: ['td1'] },
   // td1: { id: 'td1', parent: 'row1', children: ['section1'] },
@@ -700,7 +1324,7 @@ export const elements = {
       style: {
         height: '100%',
         wordSpacing: 'normal',
-        backgroundColor: '#f8f9fc',
+        backgroundColor: '#ffffff',
         fontSize: 0,
       }
     },
@@ -744,6 +1368,7 @@ export const elements = {
 
   ...nav1.elements,
   ...hero1.elements,
+  ...reviews1.elements,
   ...quote1.elements,
 
   // row1: {
@@ -1019,7 +1644,7 @@ export const elements = {
     tag:"img",
     type:"img",
     props:{
-      src:IMG_SRC[0],
+      src:IMG_SRC[3],
       alt:"img",
       style:{
         display:'block',
