@@ -99,7 +99,7 @@ const nav1 = {
       tag:"img",
       type:"img",
       props:{
-        src:IMG_SRC[3],
+        src:IMG_SRC[0],
         alt:"img",
         style:{
           display:'block',
@@ -266,7 +266,7 @@ const nav1 = {
           paddingLeft: '16px',
           fontWeight: 400,
           fontSize: 14,
-          color: '#273033',
+          color: '#69848D',
           textDecoration: 'none',
           borderWidth: '2px',
           borderStyle: 'solid',
@@ -319,12 +319,13 @@ const quote1 = {
     quote1row1: { id: 'quote1row1', parent: 'tbody', name: 'quote1', children: ['quote1td1'] },
     quote1td1: { id: 'quote1td1', parent: 'quote1row1', children: ['quote1section1'] },
     quote1section1: { id: 'quote1section1', parent: 'quote1td1',  children: ['quote1block1'] },
-    quote1block1: { id: 'quote1block1', parent: 'quote1section1', children: ['quote1Text1','quote1Avatar1','quote1block2'] },
-    quote1block2: { id: 'quote1block2', parent: 'quote1block1', children: ['quote1Name1', 'quote1Position1'] },
+    quote1block1: { id: 'quote1block1', parent: 'quote1section1', children: ['quote1Text1','quote1block2','quote1block3'] },
     quote1Text1: { id: 'quote1Text1', parent: 'quote1block1', },
+    quote1block2: { id: 'quote1block2', parent: 'quote1section1', children: ['quote1Avatar1'] },
     quote1Avatar1: { id: 'quote1Avatar1', parent: 'quote1block1',},
-    quote1Name1: { id: 'quote1Name1', parent: 'quote1block2',},
-    quote1Position1: { id: 'quote1Position1', parent: 'quote1block2', },
+    quote1block3: { id: 'quote1block3', parent: 'quote1block1', children: ['quote1Name1', 'quote1Position1'] },
+    quote1Name1: { id: 'quote1Name1', parent: 'quote1block3',},
+    quote1Position1: { id: 'quote1Position1', parent: 'quote1block3', },
   },
   elements: {
     quote1row1: {
@@ -364,6 +365,7 @@ const quote1 = {
         }
       }
     },
+
     quote1block1: {
       id:"quote1block1",
       tag:"div",
@@ -371,21 +373,8 @@ const quote1 = {
       props: {
         style: {
           width: '100%',
-          paddingTop: '0px',
-          paddingRight: '0px',
-          paddingBottom: '0px',
-          paddingLeft: '0px',
           backgroundColor: 'transparent',
           textAlign: 'left',
-          borderTopWidth: '0px',
-          borderTopStyle: 'solid',
-          borderTopColor: '#69848D',
-          borderRightWidth: '0px',
-          borderRightStyle: 'solid',
-          borderRightColor: '#69848D',
-          borderBottomWidth: '0px',
-          borderBottomStyle: 'solid',
-          borderBottomColor: '#69848D',
           borderLeftWidth: '2px',
           borderLeftStyle: 'solid',
           borderLeftColor: '#69848D',
@@ -401,8 +390,6 @@ const quote1 = {
       props: {
         style: {
           display: 'inline-block',
-          paddingTop: '0px',
-          paddingRight: '0px',
           paddingBottom: '32px',
           paddingLeft: '16px',
           fontSize: 20,
@@ -410,6 +397,17 @@ const quote1 = {
           lineHeight: 1.5,
           color: '#273033',
           textAlign: 'left',
+        }
+      }
+    },
+
+    quote1block2: {
+      id:"quote1block2",
+      tag:"div",
+      type: 'block',
+      props: {
+        style: {
+          display:'inline-block',
         }
       }
     },
@@ -422,43 +420,26 @@ const quote1 = {
         alt: "img",
         style:{
           display:'inline-block',
-          width:'30px',
-          height:'30px',
-          marginTop: '0px',
-          marginRight: '0px',
-          marginBottom: '0px',
+          width:'35px',
+          height:'35px',
           marginLeft: '16px',
           borderRadius: '50%',
           textAlign: 'left',
         },
       }
     },
-    quote1block2: {
-      id:"quote1block2",
+
+    quote1block3: {
+      id:"quote1block3",
       tag:"div",
       type: 'block',
       props: {
         style: {
           display: 'inline-block',
           width: '50%',
-          paddingTop: '0px',
-          paddingRight: '0px',
-          paddingBottom: '0px',
           paddingLeft: '12px',
           backgroundColor: 'transparent',
           textAlign: 'left',
-          borderTopWidth: '0px',
-          borderTopStyle: 'solid',
-          borderTopColor: '#69848D',
-          borderRightWidth: '0px',
-          borderRightStyle: 'solid',
-          borderRightColor: '#69848D',
-          borderBottomWidth: '0px',
-          borderBottomStyle: 'solid',
-          borderBottomColor: '#69848D',
-          borderLeftWidth: '0px',
-          borderLeftStyle: 'solid',
-          borderLeftColor: '#69848D',
           verticalAlign: 'top',
         }
       }
@@ -471,11 +452,8 @@ const quote1 = {
       contentEditable: true,
       props: {
         style: {
-          display: 'block',
-          paddingTop: '0px',
-          paddingRight: '0px',
-          paddingBottom: '0px',
-          paddingLeft: '0px',
+          display: 'inline-block',
+          width: '100%',
           fontSize: 12,
           fontWeight: 600,
           lineHeight: 1.5,
@@ -494,10 +472,7 @@ const quote1 = {
       props: {
         style: {
           display: 'inline-block',
-          paddingTop: '0px',
-          paddingRight: '0px',
-          paddingBottom: '0px',
-          paddingLeft: '0px',
+          width: '100%',
           fontSize: 10,
           fontWeight: 400,
           lineHeight: 1.5,
