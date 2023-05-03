@@ -82,6 +82,7 @@ const nav1 = {
       content: `<img src="${IMG_SRC[2]}" alt="img" width="100%"/>`,
       props:{
         href: '#',
+        inert: true,
         style:{
           display:'inline-block',
           width:'48px',

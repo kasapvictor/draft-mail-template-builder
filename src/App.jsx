@@ -10,6 +10,7 @@ import {Template3} from "./templates/Template3.jsx";
 // import {Template as Template5} from "./template5/Template.jsx";
 // import {Template as Template6} from "./template6/Template.jsx";
 import {Template as Template7} from "./template7/Template.jsx";
+import {Template as Template8} from "./template8/Template.jsx";
 
 const Routers = () => {
     return (<Routes>
@@ -21,6 +22,7 @@ const Routers = () => {
             {/*<Route path="/template-5" element={<Template5/>}/>*/}
             {/*<Route path="/template-6" element={<Template6/>}/>*/}
             <Route path="/template-7" element={<Template7/>}/>
+            <Route path="/template-8" element={<Template8/>}/>
         </Routes>)
 }
 
@@ -36,6 +38,7 @@ const Header = () => {
             {/*<li><NavLink to='template-5'>Template-5</NavLink></li>*/}
             {/*<li><NavLink to='template-6'>Template-6</NavLink></li>*/}
             <li><NavLink to='template-7'>Template-7</NavLink></li>
+            <li><NavLink to='template-8'>Template-8</NavLink></li>
         </nav>
     </header>)
 }

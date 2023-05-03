@@ -52,6 +52,12 @@ const contentEditable = new Set([
  * https://www.npmjs.com/package/sanitize-html-react
  */
 
+import {LinkImg} from './elements';
+
+const elementComponent = {
+  'link-img': LinkImg,
+}
+
 const mainColor = '#007BFF';
 
 const buildNestedTree = (flatTree, nodeId) => {
@@ -145,6 +151,8 @@ const RenderElement = memo(({ elementId, children }) => {
     ...emptyStyles,
   }), [style, isSelected, isHovered, isEmptyContent, emptyStyles])
 
+  const Component = elementComponent[type];
+
   return (
     <>
       {
@@ -164,7 +172,7 @@ const RenderElement = memo(({ elementId, children }) => {
           isSelfCloseElement
             ? null
             : <>
-              {/* #1 этот вариант не подходит потому что мы неможем кликнуть на элемент a из-за e.preventDefault() */}
+              {/* #1 этот вариант не очень гибкий */}
               {
                 type === 'link-img'
                 ? <div style={{display: 'block'}} dangerouslySetInnerHTML={{
@@ -179,14 +187,7 @@ const RenderElement = memo(({ elementId, children }) => {
                 : content
               }
 
-              {/* #2 этот вариант не подходит потому что мы неможем кликнуть на элемент a из-за e.preventDefault()*/}
-              {/*{*/}
-              {/*  type === 'link-img'*/}
-              {/*    ? <IFrame content={content}/>*/}
-              {/*    : content*/}
-              {/*}*/}
 
-              {/* #3 этот вариант не подходит потому не обработается вложенный элемент a > img например*/}
               {/*{content}*/}
 
               {children}
