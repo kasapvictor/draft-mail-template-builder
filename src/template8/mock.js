@@ -1286,20 +1286,14 @@ const footer1 = {
 
     footer1block1: { id: 'footer1block1', parent: 'footer1section1', children: ['footer1Link1', 'footer1Link2', 'footer1Link3', 'footer1text1'] },
 
-    footer1Link1: { id: 'footer1Link1', parent: 'footer1block1', children: ['footer1image1'] },
-    footer1image1: { id: 'footer1image1', parent: 'footer1Link1' },
-
-    footer1Link2: { id: 'footer1Link2', parent: 'footer1block1', children: ['footer1image2'] },
-    footer1image2: { id: 'footer1image2', parent: 'footer1Link2' },
-
-    footer1Link3: { id: 'footer1Link3', parent: 'footer1block1', children: ['footer1image3'] },
-    footer1image3: { id: 'footer1image3', parent: 'footer1Link3' },
+    footer1Link1: { id: 'footer1Link1', parent: 'footer1block1' },
+    footer1Link2: { id: 'footer1Link2', parent: 'footer1block1' },
+    footer1Link3: { id: 'footer1Link3', parent: 'footer1block1' },
 
     footer1text1: { id: 'footer1text1', parent: 'footer1block1' },
 
     footer1block2: { id: 'footer1block2', parent: 'footer1section1', children: ['footer1Link4'] },
-    footer1Link4: { id: 'footer1Link4', parent: 'footer1block2', children: ['footer1Logo1'] },
-    footer1Logo1: { id: 'footer1Logo1', parent: 'footer1Link4' },
+    footer1Link4: { id: 'footer1Link4', parent: 'footer1block2' },
 
     footer1text2: { id: 'footer1text2', parent: 'footer1block1' },
 
@@ -1361,7 +1355,7 @@ const footer1 = {
     footer1Link1: {
       id:"footer1Link1",
       tag:"a",
-      type: "link",
+      type: "link-img",
       content:`instagram`,
       props:{
         href:"#",
@@ -1372,28 +1366,24 @@ const footer1 = {
           height:'40px',
           verticalAlign: 'middle'
         }
-      }
-    }, // TODO добавить новый тип link-image
-    footer1image1: {
-      id:"footer1image1",
-      tag:"img",
-      type:"img",
-      props:{
-        src:IMG_SRC[8],
-        alt:"img",
-        style:{
-          display:'inline-block',
-          width:'100%',
-          borderRadius: '50%',
-        },
-      }
+      },
+      img: {
+        props: {
+          alt: "img",
+          src: IMG_SRC[8],
+          role:"presentation",
+          style: {
+            width: '100%',
+            borderRadius: '50%',
+          }
+        }
+      },
     },
-
     footer1Link2: {
       id:"footer1Link2",
       tag:"a",
-      type: "link",
-      content:"facebook",
+      type: "link-img",
+      content:`facebook`,
       props:{
         href:"#",
         target: "_blank",
@@ -1401,32 +1391,28 @@ const footer1 = {
           display: 'inline-block',
           width: '40px',
           height:'40px',
-          marginRight:'10px',
           marginLeft: '10px',
+          marginRight: '10px',
           verticalAlign: 'middle'
         }
-      }
-    }, // TODO добавить новый тип link-image
-    footer1image2: {
-      id:"footer1image2",
-      tag:"img",
-      type:"img",
-      props:{
-        src:IMG_SRC[9],
-        alt:"img",
-        style:{
-          display:'inline-block',
-          width:'100%',
-          borderRadius: '50%',
-        },
-      }
+      },
+      img: {
+        props: {
+          alt: "img",
+          src: IMG_SRC[9],
+          role:"presentation",
+          style: {
+            width: '100%',
+            borderRadius: '50%',
+          }
+        }
+      },
     },
-
     footer1Link3: {
       id:"footer1Link3",
       tag:"a",
-      type: "link",
-      content:"twitter",
+      type: "link-img",
+      content:`twitter`,
       props:{
         href:"#",
         target: "_blank",
@@ -1436,21 +1422,18 @@ const footer1 = {
           height:'40px',
           verticalAlign: 'middle'
         }
-      }
-    }, // TODO добавить новый тип link-image
-    footer1image3: {
-      id:"footer1image3",
-      tag:"img",
-      type:"img",
-      props:{
-        src:IMG_SRC[10],
-        alt:"img",
-        style:{
-          display:'inline-block',
-          width:'100%',
-          borderRadius: '50%',
-        },
-      }
+      },
+      img: {
+        props: {
+          alt: "img",
+          src: IMG_SRC[10],
+          role:"presentation",
+          style: {
+            width: '100%',
+            borderRadius: '50%',
+          }
+        }
+      },
     },
 
     footer1text1: {
@@ -1492,11 +1475,12 @@ const footer1 = {
         }
       }
     },
+
     footer1Link4: {
       id:"footer1Link4",
       tag:"a",
-      type: "link",
-      content:"twitter",
+      type: "link-img",
+      content:"company",
       props:{
         href:"#",
         target: "_blank",
@@ -1504,21 +1488,19 @@ const footer1 = {
           display: 'inline-block',
           verticalAlign: 'middle'
         }
-      }
-    }, // TODO добавить новый тип link-image
-    footer1Logo1: {
-      id:"nav1Logo1",
-      tag:"img",
-      type:"img",
-      props:{
-        src:IMG_SRC[2],
-        alt:"img",
-        style:{
-          display:'block',
-          width:'100%',
-          height:'auto',
-        },
-      }
+      },
+      img: {
+        props: {
+          alt: "img",
+          src: IMG_SRC[2],
+          role:"presentation",
+          style: {
+            width: '100%',
+            borderRadius: '50%',
+          }
+        }
+      },
+
     },
 
     footer1text2: {

@@ -184,31 +184,6 @@ const RenderElement = memo(({ elementId, children }) => {
               content={content}>
       {children}
     </Component>
-
-    // <>
-    //   {
-    //     createElement(
-    //       tag,
-    //       {
-    //         ...otherProps,
-    //         ref: refElement,
-    //         id: elementId,
-    //         key: elementId,
-    //         'data-type': type,
-    //         onClick: handleClick,
-    //         onMouseEnter: handleMouseEnter,
-    //         onMouseLeave: handleMouseLeave,
-    //         style: {...elementStyles}
-    //       },
-    //       isSelfCloseElement
-    //         ? null
-    //         : <>
-    //           {content}
-    //           {children}
-    //         </>
-    //     )
-    //   }
-    // </>
   )
 });
 
@@ -249,6 +224,7 @@ const labelStyle = {
 const useLabelElementPosition = (element) => {
   const [position, setPosition] = useState(null);
   const width = useStore($width);
+  const tree = useStore($tree);
 
   useEffect(() => {
     if (element) {
@@ -283,7 +259,7 @@ const useLabelElementPosition = (element) => {
     } else {
       setPosition(null);
     }
-  }, [element, width]);
+  }, [element, width, tree]);
 
   return position;
 }
