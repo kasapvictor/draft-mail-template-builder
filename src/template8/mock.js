@@ -105,8 +105,8 @@ const nav1 = {
     nav1Link1: {
       id:"nav1Link1",
       tag:"a",
-      type: "link", // link-block
-      content:"<h1><strong style='color: red;'>Price</strong></h1>",
+      type: "link-block", // link-block
+      content:"<strong style='color: #2756ff;'>Price</strong>",
       props:{
         href:"#",
         target: "_blank",
@@ -332,7 +332,7 @@ const hero1 = {
     },
     hero1title1: {
       id:"hero1title1",
-      tag:"div",
+      tag:"h1",
       type: 'title',
       content:"Customer service software for customer-first teams",
       contentEditable: true,
@@ -1104,9 +1104,6 @@ const reviews1 = {
         }
       }
     },
-
-
-
   }
 }
 
@@ -1553,6 +1550,7 @@ export const tree = {
   canvas: { id: 'canvas', parent: 'root', children: ['container'] },
   container: { id: 'container', parent: 'canvas', children: ['table'] },
   table: { id: 'table', parent: 'container', children: ['tbody'] },
+  // tbody: { id: 'tbody', parent: 'table', children: ['nav1row1', 'hero1row1', 'reviews1row1', 'quote1row1', 'footer1row1'] },
   tbody: { id: 'tbody', parent: 'table', children: ['nav1row1', 'hero1row1', 'reviews1row1', 'quote1row1', 'footer1row1'] },
 
   ...nav1.tree,

@@ -52,12 +52,24 @@ const contentEditable = new Set([
  * https://www.npmjs.com/package/sanitize-html-react
  */
 
-import {Div, LinkImg, Link, LinkBlock} from './elements';
+import {Tr, Td, Div, Text, Title, Row, Link, Block, Table, Tbody, Image, Canvas, Section, LinkImg, LinkBlock, Container} from './components';
 
 const componentByType = {
+  'tr': Tr,
+  'td': Td,
   'div': Div,
+  'row': Row,
+  'text': Text,
   'link': Link,
+  'img': Image,
+  'block': Block,
+  'title': Title,
+  'table': Table,
+  'tbody': Tbody,
+  'canvas': Canvas,
+  'section': Section,
   'link-img': LinkImg,
+  'container': Container,
   'link-block': LinkBlock,
 }
 
@@ -114,13 +126,13 @@ const useElementHandlers = ({type, isSelected, isSpecialType}) => {
 }
 
 const RenderElement = memo(({ elementId, children }) => {
+  console.log('elementId', elementId);
   const { tag, type, content, props, img } = useStoreMap({
     store: $elements,
     keys: [elementId],
     fn: (elements, [id]) => elements[id]
   });
 
-  const isSelfCloseElement = tag ? selfCloseElements.has(tag.toLowerCase()) : false;
   const isSpecialType = type ? specialTypes.has(type.toLocaleString()) : false;
   const isContentEditable = contentEditable.has(type);
 
@@ -157,44 +169,46 @@ const RenderElement = memo(({ elementId, children }) => {
   const Component = componentByType[type];
 
   return (
-    <>{ type === 'link-img'
-      ? <Component
-            {...otherProps}
-            img={img}
-            id={elementId}
-            key={elementId}
-            dataType={type}
-            ref={refElement}
-            onClick={handleClick}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            style={{ ...elementStyles }}
-            content={content}
-          >
-            {children}
-          </Component>
-      : createElement(
-          tag,
-          {
-            ...otherProps,
-            ref: refElement,
-            id: elementId,
-            key: elementId,
-            'data-type': type,
-            onClick: handleClick,
-            onMouseEnter: handleMouseEnter,
-            onMouseLeave: handleMouseLeave,
-            style: {...elementStyles}
-          },
-          isSelfCloseElement
-            ? null
-            : <>
-              {content}
-              {children}
-            </>
-        )
-    }
-    </>
+    <Component
+              {...otherProps}
+              tag={tag}
+              img={img}
+              id={elementId}
+              key={elementId}
+              dataType={type}
+              ref={refElement}
+              onClick={handleClick}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              style={{ ...elementStyles }}
+              content={content}>
+      {children}
+    </Component>
+
+    // <>
+    //   {
+    //     createElement(
+    //       tag,
+    //       {
+    //         ...otherProps,
+    //         ref: refElement,
+    //         id: elementId,
+    //         key: elementId,
+    //         'data-type': type,
+    //         onClick: handleClick,
+    //         onMouseEnter: handleMouseEnter,
+    //         onMouseLeave: handleMouseLeave,
+    //         style: {...elementStyles}
+    //       },
+    //       isSelfCloseElement
+    //         ? null
+    //         : <>
+    //           {content}
+    //           {children}
+    //         </>
+    //     )
+    //   }
+    // </>
   )
 });
 
