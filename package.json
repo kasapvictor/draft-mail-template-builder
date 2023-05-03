@@ -31,7 +31,8 @@
     "react-dom": "^18.2.0",
     "react-frame-component": "^5.2.6",
     "react-iframe": "^1.8.5",
-    "react-router-dom": "^6.9.0"
+    "react-router-dom": "^6.9.0",
+    "sanitize-html-react": "^1.13.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
