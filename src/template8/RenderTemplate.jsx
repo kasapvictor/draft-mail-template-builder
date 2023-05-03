@@ -52,10 +52,13 @@ const contentEditable = new Set([
  * https://www.npmjs.com/package/sanitize-html-react
  */
 
-import {LinkImg} from './elements';
+import {Div, LinkImg, Link, LinkBlock} from './elements';
 
-const elementComponent = {
+const componentByType = {
+  'div': Div,
+  'link': Link,
   'link-img': LinkImg,
+  'link-block': LinkBlock,
 }
 
 const mainColor = '#007BFF';
@@ -111,7 +114,7 @@ const useElementHandlers = ({type, isSelected, isSpecialType}) => {
 }
 
 const RenderElement = memo(({ elementId, children }) => {
-  const { tag, type, content, props } = useStoreMap({
+  const { tag, type, content, props, img } = useStoreMap({
     store: $elements,
     keys: [elementId],
     fn: (elements, [id]) => elements[id]
@@ -151,12 +154,26 @@ const RenderElement = memo(({ elementId, children }) => {
     ...emptyStyles,
   }), [style, isSelected, isHovered, isEmptyContent, emptyStyles])
 
-  const Component = elementComponent[type];
+  const Component = componentByType[type];
 
   return (
-    <>
-      {
-        createElement(
+    <>{ type === 'link-img'
+      ? <Component
+            {...otherProps}
+            img={img}
+            id={elementId}
+            key={elementId}
+            dataType={type}
+            ref={refElement}
+            onClick={handleClick}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            style={{ ...elementStyles }}
+            content={content}
+          >
+            {children}
+          </Component>
+      : createElement(
           tag,
           {
             ...otherProps,
@@ -172,28 +189,11 @@ const RenderElement = memo(({ elementId, children }) => {
           isSelfCloseElement
             ? null
             : <>
-              {/* #1 этот вариант не очень гибкий */}
-              {
-                type === 'link-img'
-                ? <div style={{display: 'block'}} dangerouslySetInnerHTML={{
-                    __html: sanitizeHtml(content, {
-                      allowedTags: ['img'],
-                      allowedAttributes: {
-                        img: ['src', 'alt', 'width']
-                      },
-                      selfClosing: ['img'],
-                    })
-                  }}/>
-                : content
-              }
-
-
-              {/*{content}*/}
-
+              {content}
               {children}
             </>
         )
-      }
+    }
     </>
   )
 });
@@ -302,8 +302,4 @@ const ElementLabel = () => {
       <ElementLabelHovered />
     </>
   )
-}
-
-const Link = ({props, content}) => {
-  return <a {...props}>{content}</a>
 }

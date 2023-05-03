@@ -79,10 +79,20 @@ const nav1 = {
       id:"nav1Logo1",
       tag:"a",
       type:"link-img",
-      content: `<img src="${IMG_SRC[2]}" alt="img" width="100%"/>`,
+      content: '', // сделать необязательным
+      img: {
+        props: {
+          alt: "img",
+          src: IMG_SRC[2],
+          role:"presentation",
+          style: {
+            width: '100%',
+          }
+        }
+      },
       props:{
         href: '#',
-        inert: true,
+        target: "_blank",
         style:{
           display:'inline-block',
           width:'48px',
@@ -92,27 +102,11 @@ const nav1 = {
         },
       }
     },
-    // nav1Logo1: {
-    //   id:"nav1Logo1",
-    //   tag:"img",
-    //   type:"img",
-    //   props:{
-    //     src:IMG_SRC[2],
-    //     alt:"img",
-    //     style:{
-    //       display:'inline-block',
-    //       width:'48px',
-    //       height:'48px',
-    //       marginRight: '10px',
-    //       verticalAlign: 'middle',
-    //     },
-    //   }
-    // },
     nav1Link1: {
-      id:"nav1Link2",
+      id:"nav1Link1",
       tag:"a",
-      type: "link",
-      content:"Price",
+      type: "link", // link-block
+      content:"<h1><strong style='color: red;'>Price</strong></h1>",
       props:{
         href:"#",
         target: "_blank",
